@@ -63,6 +63,25 @@
 
             console.log('✅ Image slider running – switches every 3 seconds.');
         })();
+    // SEARCH FUNCTIONALITY 
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchOverlay = document.getElementById('searchOverlay');
+        const searchResults = document.getElementById('searchResults');
+
+        // Service data for search
+        const services = [
+            { name: 'Printing', icon: 'fa-print', section: '#services' },
+            { name: 'Photocopying', icon: 'fa-copy', section: '#services' },
+            { name: 'Binding', icon: 'fa-book', section: '#services' },
+            { name: 'Passport Photos', icon: 'fa-camera', section: '#services' },
+            { name: 'KRA Services', icon: 'fa-building-columns', section: '#services' },
+            { name: 'Graphic Design', icon: 'fa-palette', section: '#services' },
+            { name: 'Scanning & Emailing', icon: 'fa-envelope', section: '#services' },
+            { name: 'Website Development', icon: 'fa-code', section: '#services' },
+            { name: 'Online Applications', icon: 'fa-laptop', section: '#services' },
+            { name: 'HELB Application', icon: 'fa-user-graduate', section: '#services' }
+        ];
 
 
 
