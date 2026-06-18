@@ -103,3 +103,14 @@
             border: none;
             padding: 5px;
         }
+       /* CONTAINER  */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 30px 40px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+
