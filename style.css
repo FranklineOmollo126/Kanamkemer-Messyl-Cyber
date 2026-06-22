@@ -230,8 +230,8 @@
         .nav-links a:hover::after {
             width: 100%;
         }
-
-        .nav-links a:hover {
+        .nav-links a:hover,
+        .nav-links a:active {
             color: #e67e22;
         }
 
