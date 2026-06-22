@@ -120,7 +120,7 @@ document.addEventListener('keydown', function(e) {
         searchInput.value = '';
     }
 });
-/*
+
 // SMOOTH SCROLL FOR NAV LINKS 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
@@ -142,7 +142,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 console.log('✅ Search functionality loaded successfully!');
-*/
+
 // Mobile menu
 
 
