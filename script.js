@@ -1,4 +1,67 @@
-    // SEARCH FUNCTIONALITY 
+// ACTIVE NAV LINK ON SCROLL
+const sections = document.querySelectorAll('section[id], .container[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+
+function updateActiveLink() {
+    let current = '';
+    const scrollPosition = window.scrollY + 120; // Offset for navbar
+    
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+            current = section.getAttribute('id');
+        }
+    });
+    
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+            link.classList.add('active');
+        }
+    });
+}
+
+// Update on scroll
+window.addEventListener('scroll', updateActiveLink);
+
+// Update on load
+window.addEventListener('load', function() {
+    // Set home as active by default
+    document.querySelector('.nav-link[href="#home"]')?.classList.add('active');
+    updateActiveLink();
+});
+
+// Update on click 
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href === "#") return;
+        
+        // Remove active from all links
+        navLinks.forEach(link => link.classList.remove('active'));
+        // Add active to clicked link
+        this.classList.add('active');
+        
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+            const navbarHeight = document.querySelector('.navbar-wrapper').offsetHeight;
+            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+            
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+
+
+
+// SEARCH FUNCTIONALITY 
         const searchInput = document.getElementById('searchInput');
         const searchBtn = document.getElementById('searchBtn');
         const searchOverlay = document.getElementById('searchOverlay');
