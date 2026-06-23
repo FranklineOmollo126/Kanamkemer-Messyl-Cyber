@@ -29,7 +29,10 @@ window.addEventListener('scroll', updateActiveLink);
 // Update on load
 window.addEventListener('load', function() {
     // Set home as active by default
-    document.querySelector('.nav-link[href="#home"]')?.classList.add('active');
+   const homeLink = document.querySelector('.nav-link[href="#home"]');
+    if (homeLink) {
+        homeLink.classList.add('active');
+    }
     updateActiveLink();
 });
 
@@ -148,63 +151,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 }
 
-//  SEARCH EVENT LISTENERS 
-
-// Search on button click
-searchBtn.addEventListener('click', function(e) {
-    e.preventDefault();
-    performSearch(searchInput.value);
-});
-
-// Search on Enter key
-searchInput.addEventListener('keyup', function(e) {
-    if (e.key === 'Enter') {
-        performSearch(this.value);
-    }
-});
-
-
-
-// Close search overlay when clicking outside
-document.addEventListener('click', function(e) {
-    if (searchOverlay.classList.contains('active')) {
-        if (!searchOverlay.contains(e.target) && 
-            !searchInput.contains(e.target) && 
-            !searchBtn.contains(e.target)) {
-            searchOverlay.classList.remove('active');
-        }
-    }
-});
-
-// Close on Escape key
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && searchOverlay.classList.contains('active')) {
-        searchOverlay.classList.remove('active');
-        searchInput.value = '';
-    }
-});
-
-// SMOOTH SCROLL FOR NAV LINKS 
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        const href = this.getAttribute('href');
-        if (href === "#") return;
-        
-        e.preventDefault();
-        const target = document.querySelector(href);
-        if (target) {
-            const navbarHeight = document.querySelector('.navbar-wrapper').offsetHeight;
-            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
-            
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-        }
-    });
-});
-
-console.log('✅ Search functionality loaded successfully!');
 
 //  HERO SLIDER
         (function() {
@@ -286,6 +232,69 @@ document.querySelectorAll('.nav-links a').forEach(link => {
         navLinks.classList.remove('active');
     });
 });
+console.log('✅ All functionality loaded successfully!');
+
+
+
+
+
+/*
+// Search on button click
+searchBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    performSearch(searchInput.value);
+});
+
+// Search on Enter key
+searchInput.addEventListener('keyup', function(e) {
+    if (e.key === 'Enter') {
+        performSearch(this.value);
+    }
+});
+
+
+
+// Close search overlay when clicking outside
+document.addEventListener('click', function(e) {
+    if (searchOverlay.classList.contains('active')) {
+        if (!searchOverlay.contains(e.target) && 
+            !searchInput.contains(e.target) && 
+            !searchBtn.contains(e.target)) {
+            searchOverlay.classList.remove('active');
+        }
+    }
+});
+
+// Close on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && searchOverlay.classList.contains('active')) {
+        searchOverlay.classList.remove('active');
+        searchInput.value = '';
+    }
+});
+
+// SMOOTH SCROLL FOR NAV LINKS 
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href === "#") return;
+        
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+            const navbarHeight = document.querySelector('.navbar-wrapper').offsetHeight;
+            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+            
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+console.log('✅ Search functionality loaded successfully!');
+*/
 
 
 
