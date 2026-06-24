@@ -210,31 +210,18 @@ console.log('✅ Search functionality loaded successfully!');
         })();
 
     //  HAMBURGER MENU 
-const hamburger = document.getElementById('hamburger');
-const navLinks = document.getElementById('navLinks');
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
 
-hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-});
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
 
-// Close menu on link click (mobile)
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-    });
-});
-
-
+        // Close menu on link click (mobile)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
 
 
-
-
-
-
-
-
-
-
-
-
-                
