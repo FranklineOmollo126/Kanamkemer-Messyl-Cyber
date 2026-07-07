@@ -479,6 +479,7 @@ section h2::after {
             font-size: 1.8rem;
             color: #0b2b4a;
             margin-bottom: 16px;
+            align-items: center;
         }
 
         .about-text p {
