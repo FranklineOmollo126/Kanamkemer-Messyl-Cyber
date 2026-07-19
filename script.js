@@ -269,6 +269,9 @@ document.querySelectorAll('.nav-links a').forEach(link => {
         navLinksMenu.classList.remove('active');
     });
 });
+
+/**
+
 // 6. CONTACT FORM SUBMISSION- with web3forms submiting to gmail
 const form = document.getElementById('contactForm'); 
   const submitBtn = form.querySelector('button[type="submit"]');
@@ -370,6 +373,9 @@ function removeFile() {
     }
 }
 // 8. CONTACT FORM WITH FILE ATTACHMENT
+
+ *
+ 
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
@@ -415,6 +421,36 @@ if (contactForm) {
         }
     });
 }
+
+*/
+
+function submitToWhatsapp() {
+    const phoneNumber = "254768255174";
+
+    const name = document.getElementById("name")?.value.trim() || "";
+    const email = document.getElementById("email")?.value.trim() || "";
+    const phone = document.getElementById("phone")?.value.trim() || "";
+    const service = document.getElementById("service")?.value.trim() || "";
+    const message = document.getElementById("message")?.value.trim() || "";
+
+    const text = `*New Service Inquiry*
+
+    *Name:* ${name}
+    *Email:* ${email}
+    *Phone:* ${phone}
+    *Service:* ${service}
+
+    *Message:*
+    ${message}
+
+     If you have any document or image, please attach it before sending this message.`;
+
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
+
+    window.open(whatsappURL, "_blank");
+}
+
+
 
 // 7. CONSOLE CONFIRMATION
 
