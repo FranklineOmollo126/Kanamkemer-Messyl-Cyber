@@ -269,72 +269,132 @@ document.querySelectorAll('.nav-links a').forEach(link => {
         navLinksMenu.classList.remove('active');
     });
 });
+// BRANCH CONFIGURATION AND HANDLING
 
-/**
-
-// 6. CONTACT FORM SUBMISSION- with web3forms submiting to gmail
-const form = document.getElementById('contactForm'); 
-  const submitBtn = form.querySelector('button[type="submit"]');
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(form);
-    formData.append("access_key", "7f722677-cde5-4a2f-bd25-f154fc89b167");
-
-    const originalHTML = submitBtn.innerHTML; 
-
-    submitBtn.innerHTML = "Sending...";
-    submitBtn.disabled = true;
-
-    try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: formData
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        alert("Success! Your message has been sent.");
-        form.reset();
-      } else {
-        alert("Error: " + data.message);
-      }
-
-    } catch (error) {
-      alert("Something went wrong. Please try again.");
-    } finally {
-      submitBtn.innerHTML = originalHTML; 
-      submitBtn.disabled = false;
+const branches = {
+    main: {
+        name: 'Main Branch - Kanamkemer Catholic Street',
+        phone: '+254 717343717',
+        whatsapp: '254717343717',
+        email: 'messylcyber@gmail.com',
+        address: 'Kanamkemer Catholic Street'
+    },
+    second: {
+        name: 'Second Branch - (Messyl Orange) Kanam-Lodwar Town route',
+        phone: '+254 742 502 651',
+        whatsapp: '254742502651',
+        email: 'messylcyber@gmail.com',
+        address: 'Kanam-Lodwar Town route'
+        
     }
-  });
+};
+// Function to submit form data to WhatsApp
+function submitToWhatsapp() {
+    // Get form values with proper IDs
+    const name = document.getElementById('name')?.value.trim() || '';
+    const email = document.getElementById('email')?.value.trim() || '';
+    const phone = document.getElementById('phone')?.value.trim() || '';
+    const branch = document.getElementById('branchSelect')?.value || '';
+    const service = document.getElementById('service')?.value || '';
+    const message = document.getElementById('message')?.value.trim() || '';
+    const fileInput = document.getElementById('fileAttachment');
+    const file = fileInput?.files[0] || null;
+    // Validate branch selection
+    if (!branch) {
+        alert('❌ Please select a branch before sending.');
+        document.getElementById('branchSelect')?.focus();
+        return false;
+    }
+    
+    // Get branch details
+    const branchDetails = branches[branch];
+    if (!branchDetails) {
+        alert('❌ Invalid branch selected.');
+        return false;
+    }
+    
+    // Get the phone number for the selected branch
+    const phoneNumber = branchDetails.whatsapp;
+    
+    // Build the message
+    let text = '*📋 NEW SERVICE INQUIRY*\n';
+    text += '━'.repeat(30) + '\n\n';
+    text += `*🏢 Branch:* ${branchDetails.name}\n`;
+    text += `*📞 Branch Phone:* ${branchDetails.phone}\n`;
+    text += `*📍 Branch Location:* ${branchDetails.address}\n\n`;
+    text += '━'.repeat(30) + '\n\n';
+    text += `*👤 Name:* ${name || 'Not provided'}\n`;
+    text += `*📧 Email:* ${email || 'Not provided'}\n`;
+    text += `*📱 Phone:* ${phone || 'Not provided'}\n`;
+    text += `*🛠️ Service Needed:* ${service || 'Not specified'}\n\n`;
+    text += '━'.repeat(30) + '\n\n';
+    text += `*📝 Message:*\n${message || 'No message provided'}\n\n`;
+    text += '━'.repeat(30) + '\n\n';
+    
+    // Add file information if attached
+    if (file) {
+        const fileSizeKB = (file.size / 1024).toFixed(1);
+        const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+        const fileSizeDisplay = fileSizeMB > 1 ? `${fileSizeMB} MB` : `${fileSizeKB} KB`;
+        
+        text += `*📎 File Attached:*\n`;
+        text += `   📄 ${file.name}\n`;
+        text += `   📊 Size: ${fileSizeDisplay}\n`;
+        text += `   📁 Type: ${file.type || 'Unknown'}\n\n`;
+        text += `⚠️ *IMPORTANT:* Please attach the file manually when sending this message.\n`;
+        text += `   The file will not be sent automatically via WhatsApp.\n\n`;
+    } else {
+        text += `*📎 No file attached*\n\n`;
+    }
+    
+    text += '━'.repeat(30) + '\n\n';
+    text += `*📅 Sent:* ${new Date().toLocaleString()}\n`;
+    text += `*✅ Please respond to this inquiry as soon as possible.*`;
+    
+    // Encode the message for URL
+    const encodedText = encodeURIComponent(text);
+    
+    // Create WhatsApp URL with the branch-specific number
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedText}`;
+    
+    // Open WhatsApp in a new tab
+    window.open(whatsappURL, '_blank');
+    
+    
+    alert(`✅ Your inquiry has been sent to:\n\n${branchDetails.name}\n📞 ${branchDetails.phone}\n\nPlease wait for a response.`);
+    
+    return true;
+}
 
-// 7. FILE ATTACHMENT HANDLING
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        submitToWhatsapp();
+    });
+}
+// FILE ATTACHMENT HANDLING
 const fileInput = document.getElementById('fileAttachment');
 const fileInfo = document.getElementById('fileInfo');
 
 if (fileInput) {
-    // Show file name when selected
     fileInput.addEventListener('change', function() {
         const fileName = this.files[0]?.name;
         const fileSize = this.files[0]?.size;
-        const maxSize = 5 * 1024 * 1024; // 5MB
+        const maxSize = 10 * 1024 * 1024;
         
         if (this.files.length > 0) {
-            // Check file size
             if (fileSize > maxSize) {
-                alert('File is too large! Maximum size is 5MB.');
-                this.value = ''; // Clear the input
+                alert('File is too large! Maximum size is 10MB.');
+                this.value = '';
                 fileInfo.innerHTML = `
                     <i class="fas fa-exclamation-circle" style="color: #d32f2f;"></i>
-                    File too large! Maximum size is 5MB. Supported formats: PDF, DOC, DOCX, JPG, PNG, TXT
+                    File too large! Maximum size is 10MB.
                 `;
                 fileInfo.style.color = '#d32f2f';
                 return;
             }
             
-            // Show success message with file name
             fileInfo.innerHTML = `
                 <div class="file-selected">
                     <i class="fas fa-file"></i>
@@ -349,17 +409,15 @@ if (fileInput) {
             `;
             fileInfo.style.color = '#2e7d32';
         } else {
-            // Reset if no file selected
             fileInfo.innerHTML = `
                 <i class="fas fa-info-circle" style="color: #e67e22;"></i> 
-                Supported formats: PDF, DOC, DOCX, JPG, PNG, TXT (Max 5MB)
+                Supported formats: PDF, DOC, DOCX, JPG, PNG, TXT (Max 10MB)
             `;
             fileInfo.style.color = '#5a6e85';
         }
     });
 }
 
-// Function to remove the selected file
 function removeFile() {
     const fileInput = document.getElementById('fileAttachment');
     if (fileInput) {
@@ -367,63 +425,54 @@ function removeFile() {
         const fileInfo = document.getElementById('fileInfo');
         fileInfo.innerHTML = `
             <i class="fas fa-info-circle" style="color: #e67e22;"></i> 
-            Supported formats: PDF, DOC, DOCX, JPG, PNG, TXT (Max 5MB)
+            Supported formats: PDF, DOC, DOCX, JPG, PNG, TXT (Max 10MB)
         `;
         fileInfo.style.color = '#5a6e85';
     }
 }
-// 8. CONTACT FORM WITH FILE ATTACHMENT
 
- *
- 
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
+// UPDATE WHATSAPP FLOAT BUTTON
+function updateWhatsAppButton(branchKey) {
+    const whatsappLink = document.getElementById('whatsappFloat');
+    if (whatsappLink && branches[branchKey]) {
+        const phone = branches[branchKey].whatsapp.replace(/[^0-9]/g, '');
+        whatsappLink.href = `https://wa.me/${phone}`;
+        whatsappLink.setAttribute('aria-label', `Chat on WhatsApp - ${branches[branchKey].name}`);
+    }
+}
+// BRANCH SELECTION HANDLER
+const branchSelect = document.getElementById('branchSelect');
+if (branchSelect) {
+    branchSelect.addEventListener('change', function() {
+        const selectedBranch = this.value;
         
-        // Get form data
-        const name = this.querySelector('input[type="text"]')?.value || '';
-        const email = this.querySelector('input[type="email"]')?.value || '';
-        const phone = this.querySelector('input[type="tel"]')?.value || '';
-        const service = this.querySelector('select')?.value || '';
-        const message = this.querySelector('textarea')?.value || '';
-        const file = document.getElementById('fileAttachment')?.files[0] || null;
-        
-        // Build message
-        let alertMessage = `Thank you ${name}! We have received your message.\n\n`;
-        alertMessage += `Service Requested: ${service}\n`;
-        alertMessage += `Email: ${email}\n`;
-        alertMessage += `Phone: ${phone || 'Not provided'}\n`;
-        alertMessage += `Message: ${message || 'No message provided'}\n`;
-        
-        if (file) {
-            alertMessage += `\n📎 File Attached: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
-        } else {
-            alertMessage += `\n📎 No file attached`;
+        // Remove existing branch info
+        const existingInfo = document.querySelector('.branch-info');
+        if (existingInfo) {
+            existingInfo.remove();
         }
         
-        alertMessage += `\n\nWe will get back to you soon!`;
-        
-        // Show success message
-        alert(alertMessage);
-        
-        // Reset form
-        this.reset();
-        
-        // Reset file info
-        const fileInfo = document.getElementById('fileInfo');
-        if (fileInfo) {
-            fileInfo.innerHTML = `
-                <i class="fas fa-info-circle" style="color: #e67e22;"></i> 
-                Supported formats: PDF, DOC, DOCX, JPG, PNG, TXT (Max 5MB)
+        if (selectedBranch && branches[selectedBranch]) {
+            const branch = branches[selectedBranch];
+            const infoDiv = document.createElement('div');
+            infoDiv.className = `branch-info visible ${selectedBranch}`;
+            infoDiv.innerHTML = `
+                <i class="fas fa-store"></i>
+                <strong>${branch.name}</strong><br>
+                <i class="fas fa-phone"></i> ${branch.phone} 
+                <i class="fab fa-whatsapp" style="margin-left:12px;"></i> ${branch.whatsapp}
             `;
-            fileInfo.style.color = '#5a6e85';
+            
+            // Insert after the select
+            this.parentNode.after(infoDiv);
+            
+            // Update WhatsApp button
+            updateWhatsAppButton(selectedBranch);
         }
     });
 }
 
-*/
-
+/*
 function submitToWhatsapp() {
     const phoneNumber = "254768255174";
 
@@ -449,10 +498,10 @@ function submitToWhatsapp() {
 
     window.open(whatsappURL, "_blank");
 }
+*/
 
 
-
-// 7. CONSOLE CONFIRMATION
+// 6. CONSOLE CONFIRMATION
 
 
 console.log('✅ All functionality loaded successfully!');

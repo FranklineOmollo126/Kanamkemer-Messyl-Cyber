@@ -1312,9 +1312,9 @@ section h2::after {
     background-position: right 16px center;
 }
 
-/* ============================================
+
    FILE INPUT STYLES
-   ============================================ */
+  
 
 /* Style the file input */
 .input-group input[type="file"] {
@@ -1485,6 +1485,70 @@ section h2::after {
 @keyframes pulse-pin {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.2); }
+}
+/* BRANCH SELECTION STYLES */
+.input-group select#branchSelect {
+    cursor: pointer;
+}
+/* Highlight the branch selection when a branch is chosen */
+.input-group select#branchSelect:valid {
+    border-color: #2ecc71;
+    background-color: #f0fff4;
+}
+
+/* Branch indicator badges */
+.branch-badge {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: 8px;
+}
+
+.branch-badge.main {
+    background: #e67e22;
+    color: white;
+}
+
+.branch-badge.second {
+    background: #3498db;
+    color: white;
+}
+
+/* Branch info in the form */
+.branch-info {
+    display: none;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    margin-top: -5px;
+}
+
+.branch-info.visible {
+    display: block;
+}
+
+.branch-info.main {
+    background: rgba(230, 126, 34, 0.08);
+    border-left: 3px solid #e67e22;
+}
+
+.branch-info.second {
+    background: rgba(52, 152, 219, 0.08);
+    border-left: 3px solid #3498db;
+}
+
+.branch-info i {
+    margin-right: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .branch-info {
+        font-size: 0.8rem;
+        padding: 10px 14px;
+    }
 }
 
 /*FOOTER*/
