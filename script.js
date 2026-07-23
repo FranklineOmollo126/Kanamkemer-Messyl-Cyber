@@ -2,12 +2,10 @@
 // Get all sections and nav links
 const sections = document.querySelectorAll('section[id], .container[id]');
 const navLinks = document.querySelectorAll('.nav-link');
-
 // Function to update active link based on scroll position
 function updateActiveLink() {
     let current = '';
-    const scrollPosition = window.scrollY + 120;
-    
+    const scrollPosition = window.scrollY + 120;    
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
         const sectionHeight = section.offsetHeight;
@@ -15,8 +13,7 @@ function updateActiveLink() {
         if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
             current = section.getAttribute('id');
         }
-    });
-    
+    });    
     navLinks.forEach(link => {
         link.classList.remove('active');
         if (link.getAttribute('href') === '#' + current) {
@@ -24,10 +21,8 @@ function updateActiveLink() {
         }
     });
 }
-
 // Update active link on scroll
 window.addEventListener('scroll', updateActiveLink);
-
 // Update active link on load - set Home as default
 window.addEventListener('load', function() {
     const homeLink = document.querySelector('.nav-link[href="#home"]');
@@ -40,8 +35,7 @@ window.addEventListener('load', function() {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         const href = this.getAttribute('href');
-        if (href === "#") return;
-        
+        if (href === "#") return;        
         // Remove active class from all nav links
         navLinks.forEach(link => link.classList.remove('active'));
         // Add active class to clicked link
@@ -88,19 +82,15 @@ const pages = [
     { name: 'Pricing', icon: 'fa-tag', section: '#pricing' },
     { name: 'Contact Us', icon: 'fa-envelope', section: '#contact' }
 ];
-
 const allSearchable = [...services, ...pages];
-
 function performSearch(query) {
     if (!query.trim()) {
         searchOverlay.classList.remove('active');
         return;
     }
-
     const results = allSearchable.filter(item =>
         item.name.toLowerCase().includes(query.toLowerCase())
     );
-
     if (results.length === 0) {
         searchResults.innerHTML = `
             <div class="no-results">
@@ -112,7 +102,6 @@ function performSearch(query) {
         searchOverlay.classList.add('active');
         return;
     }
-
     let resultsHTML = '';
     results.forEach(item => {
         resultsHTML += `
@@ -162,7 +151,6 @@ searchInput.addEventListener('keyup', function(e) {
         performSearch(this.value);
     }
 });
-
 // Close search overlay when clicking outside
 document.addEventListener('click', function(e) {
     if (searchOverlay.classList.contains('active')) {
@@ -173,7 +161,6 @@ document.addEventListener('click', function(e) {
         }
     }
 });
-
 // Close on Escape key
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && searchOverlay.classList.contains('active')) {
@@ -181,18 +168,13 @@ document.addEventListener('keydown', function(e) {
         searchInput.value = '';
     }
 });
-
-
 // 4. HERO SLIDER
-
-
 (function() {
     const slides = document.querySelectorAll('.slide');
     const dotsContainer = document.getElementById('sliderDots');
     let currentIndex = 0;
     let intervalId = null;
     const intervalTime = 3000;
-
     // Create dots
     slides.forEach((_, idx) => {
         const dot = document.createElement('span');
@@ -200,37 +182,29 @@ document.addEventListener('keydown', function(e) {
         if (idx === 0) dot.classList.add('active-dot');
         dotsContainer.appendChild(dot);
     });
-
     const dots = dotsContainer.querySelectorAll('span');
-
     function goToSlide(index) {
         if (index < 0) index = slides.length - 1;
         if (index >= slides.length) index = 0;
-
         slides.forEach(s => s.classList.remove('active'));
         dots.forEach(d => d.classList.remove('active-dot'));
-
         slides[index].classList.add('active');
         dots[index].classList.add('active-dot');
         currentIndex = index;
     }
-
     function nextSlide() {
         goToSlide(currentIndex + 1);
     }
-
     function startSlider() {
         if (intervalId) clearInterval(intervalId);
         intervalId = setInterval(nextSlide, intervalTime);
     }
-
     function stopSlider() {
         if (intervalId) {
             clearInterval(intervalId);
             intervalId = null;
         }
     }
-
     // Dot clicks
     dots.forEach((dot) => {
         dot.addEventListener('click', function() {
@@ -240,7 +214,6 @@ document.addEventListener('keydown', function(e) {
             startSlider();
         });
     });
-
     // Pause on hover/touch
     const sliderContainer = document.getElementById('heroSlider');
     sliderContainer.addEventListener('mouseenter', stopSlider);
@@ -262,7 +235,6 @@ const navLinksMenu = document.getElementById('navLinks');
 hamburger.addEventListener('click', () => {
     navLinksMenu.classList.toggle('active');
 });
-
 // Close menu on link click (mobile)
 document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
@@ -270,7 +242,6 @@ document.querySelectorAll('.nav-links a').forEach(link => {
     });
 });
 // BRANCH CONFIGURATION AND HANDLING
-
 const branches = {
     main: {
         name: 'Main Branch - Kanamkemer Catholic Street',
@@ -284,8 +255,7 @@ const branches = {
         phone: '+254 742 502 651',
         whatsapp: '254742502651',
         email: 'messylcyber@gmail.com',
-        address: 'Kanam-Lodwar Town route'
-        
+        address: 'Kanam-Lodwar Town route'        
     }
 };
 // Function to submit form data to WhatsApp
@@ -304,18 +274,15 @@ function submitToWhatsapp() {
         alert('❌ Please select a branch before sending.');
         document.getElementById('branchSelect')?.focus();
         return false;
-    }
-    
+    }    
     // Get branch details
     const branchDetails = branches[branch];
     if (!branchDetails) {
         alert('❌ Invalid branch selected.');
         return false;
-    }
-    
+    }    
     // Get the phone number for the selected branch
-    const phoneNumber = branchDetails.whatsapp;
-    
+    const phoneNumber = branchDetails.whatsapp;    
     // Build the message
     let text = '*📋 NEW SERVICE INQUIRY*\n';
     text += '━'.repeat(30) + '\n\n';
@@ -329,8 +296,7 @@ function submitToWhatsapp() {
     text += `*🛠️ Service Needed:* ${service || 'Not specified'}\n\n`;
     text += '━'.repeat(30) + '\n\n';
     text += `*📝 Message:*\n${message || 'No message provided'}\n\n`;
-    text += '━'.repeat(30) + '\n\n';
-    
+    text += '━'.repeat(30) + '\n\n';    
     // Add file information if attached
     if (file) {
         const fileSizeKB = (file.size / 1024).toFixed(1);
@@ -345,24 +311,18 @@ function submitToWhatsapp() {
         text += `   The file will not be sent automatically via WhatsApp.\n\n`;
     } else {
         text += `*📎 No file attached*\n\n`;
-    }
-    
+    }    
     text += '━'.repeat(30) + '\n\n';
     text += `*📅 Sent:* ${new Date().toLocaleString()}\n`;
-    text += `*✅ Please respond to this inquiry as soon as possible.*`;
-    
+    text += `*✅ Please respond to this inquiry as soon as possible.*`;    
     // Encode the message for URL
-    const encodedText = encodeURIComponent(text);
-    
+    const encodedText = encodeURIComponent(text);    
     // Create WhatsApp URL with the branch-specific number
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedText}`;
     
     // Open WhatsApp in a new tab
-    window.open(whatsappURL, '_blank');
-    
-    
-    alert(`✅ Your inquiry has been sent to:\n\n${branchDetails.name}\n📞 ${branchDetails.phone}\n\nPlease wait for a response.`);
-    
+    window.open(whatsappURL, '_blank');    
+    alert(`✅ Your inquiry has been sent to:\n\n${branchDetails.name}\n📞 ${branchDetails.phone}\n\nPlease wait for a response.`);    
     return true;
 }
 
@@ -430,7 +390,6 @@ function removeFile() {
         fileInfo.style.color = '#5a6e85';
     }
 }
-
 // UPDATE WHATSAPP FLOAT BUTTON
 function updateWhatsAppButton(branchKey) {
     const whatsappLink = document.getElementById('whatsappFloat');
@@ -461,8 +420,7 @@ if (branchSelect) {
                 <strong>${branch.name}</strong><br>
                 <i class="fas fa-phone"></i> ${branch.phone} 
                 <i class="fab fa-whatsapp" style="margin-left:12px;"></i> ${branch.whatsapp}
-            `;
-            
+            `;            
             // Insert after the select
             this.parentNode.after(infoDiv);
             
@@ -499,11 +457,56 @@ function submitToWhatsapp() {
     window.open(whatsappURL, "_blank");
 }
 */
+// 7. WORKING HOURS STATUS
+function updateWorkingHours() {
+    const status = document.getElementById("working-status");
+    const now = new Date();
+    const day = now.getDay(); // Sunday = 0 ... Saturday = 6
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
+    const openTime = 8 * 60;   // 8:00 AM
+    const closeTime = 19 * 60; // 7:00 PM
+    // Saturday
+    if (day === 6) {
+        status.className = "working-status closed";
+        status.innerHTML = "🔴 Closed Today (Saturday)";
+        return;
+    }
+    // Before opening
+    if (currentMinutes < openTime) {
+        const minsLeft = openTime - currentMinutes;
 
+        if (minsLeft <= 60) {
+            status.className = "working-status soon";
+            status.innerHTML = `🟡 Opening in ${minsLeft} minute${minsLeft !== 1 ? "s" : ""}`;
+        } else {
+            status.className = "working-status closed";
+            status.innerHTML = "🔴 Currently Closed";
+        }
+        return;
+    }
 
+    // During working hours
+    if (currentMinutes >= openTime && currentMinutes < closeTime) {
+        const minsLeft = closeTime - currentMinutes;
+
+        if (minsLeft <= 60) {
+            status.className = "working-status soon";
+            status.innerHTML = `🟠 Closing in ${minsLeft} minute${minsLeft !== 1 ? "s" : ""}`;
+        } else {
+            status.className = "working-status open";
+            status.innerHTML = "🟢 We are Open";
+        }
+        return;
+    }
+    // After closing
+    status.className = "working-status closed";
+    status.innerHTML = "🔴 Closed for Today";
+}
+updateWorkingHours();
+
+// Update every minute
+setInterval(updateWorkingHours, 60000);
 // 6. CONSOLE CONFIRMATION
-
-
 console.log('✅ All functionality loaded successfully!');
 console.log('✅ Navbar active state working');
 console.log('✅ Search functionality working');
