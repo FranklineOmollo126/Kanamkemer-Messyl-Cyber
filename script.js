@@ -241,7 +241,46 @@ document.querySelectorAll('.nav-links a').forEach(link => {
         navLinksMenu.classList.remove('active');
     });
 });
-// BRANCH CONFIGURATION AND HANDLING
+// 6.CALCULATOR
+function calculatePrice() {
+    const service = document.getElementById('calcService').value;
+    const quantity = parseInt(document.getElementById('calcQuantity').value) || 1;
+
+    // Prices per unit
+    const prices = {
+        'printing': 10,
+        'printing-color': 20,
+        'photos': 200,
+        'binding': 100,
+        'design': 500,
+        'laminate':50
+    };
+
+    const unitPrice = prices[service] || 0;
+    const total = unitPrice * quantity;
+
+    const result = document.getElementById('calcResult');
+    result.style.display = 'block';
+    document.getElementById('priceDisplay').textContent = `Ksh ${total.toLocaleString()}`;
+
+    // Animation
+    result.style.animation = 'none';
+    setTimeout(() => {
+        result.style.animation = 'fadeIn 0.5s ease';
+    }, 10);
+}
+
+// Animation
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+`;
+document.head.appendChild(style);
+
+// 7. BRANCH CONFIGURATION AND HANDLING
 const branches = {
     main: {
         name: 'Main Branch - Kanamkemer Catholic Street',
@@ -457,7 +496,7 @@ function submitToWhatsapp() {
     window.open(whatsappURL, "_blank");
 }
 */
-// 7. WORKING HOURS STATUS
+// 8. WORKING HOURS STATUS
 function updateWorkingHours() {
     const status = document.getElementById("working-status");
     const now = new Date();
@@ -506,7 +545,7 @@ updateWorkingHours();
 
 // Update every minute
 setInterval(updateWorkingHours, 60000);
-// 6. CONSOLE CONFIRMATION
+// 9. CONSOLE CONFIRMATION
 console.log('✅ All functionality loaded successfully!');
 console.log('✅ Navbar active state working');
 console.log('✅ Search functionality working');
