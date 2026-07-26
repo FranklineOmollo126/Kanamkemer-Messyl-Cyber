@@ -279,8 +279,226 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+//7.REVIEW SYSTEM
+let reviews = [];
 
-// 7. BRANCH CONFIGURATION AND HANDLING
+// Default reviews
+const defaultReviews = [
+    {
+        name: 'John Mwangi',
+        rating: 5,
+        comment: 'Excellent service! They helped me with my KRA registration quickly and professionally. Highly recommended!',
+        date: new Date('2026-04-15').toISOString()
+    },
+    {
+        name: 'Sarah Akinyi',
+        rating: 5,
+        comment: 'The best cyber cafe in Lodwar! Fast internet, friendly staff, and affordable prices. They also do great graphic design work.',
+        date: new Date('2026-04-10').toISOString()
+    }
+  
+];
+
+// Load reviews from localStorage
+function loadReviews() {
+    const stored = localStorage.getItem('messylReviews');
+    if (stored) {
+        try {
+            reviews = JSON.parse(stored);
+        } catch {
+            reviews = [];
+        }
+    }
+    
+    // If no reviews, use defaults
+    if (reviews.length === 0) {
+        reviews = [...defaultReviews];
+        saveReviews();
+    }
+    
+    displayReviews();
+}
+
+// Save reviews to localStorage
+function saveReviews() {
+    localStorage.setItem('messylReviews', JSON.stringify(reviews));
+}
+
+// Display reviews
+function displayReviews() {
+    const grid = document.getElementById('reviewsGrid');
+    if (!grid) return;
+
+    if (reviews.length === 0) {
+        grid.innerHTML = `
+            <div class="no-reviews">
+                <i class="fas fa-comment-dots"></i>
+                <p>No reviews yet. Be the first to share your experience!</p>
+            </div>
+        `;
+        return;
+    }
+
+    // Sort: newest first
+    const sorted = [...reviews].reverse();
+
+    let html = '';
+    sorted.forEach((review) => {
+        const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+        const date = new Date(review.date).toLocaleDateString('en-KE', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+
+        html += `
+            <div class="testimonial-card">
+                <div class="stars">${stars}</div>
+                <p>"${escapeHtml(review.comment)}"</p>
+                <div class="customer">
+                    <strong>${escapeHtml(review.name)}</strong>
+                    <span>${date}</span>
+                </div>
+            </div>
+        `;
+    });
+
+    grid.innerHTML = html;
+}
+
+// Simple escape to prevent XSS
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Toggle review form
+function toggleReviewForm() {
+    const wrapper = document.getElementById('reviewFormWrapper');
+    if (wrapper.style.display === 'none') {
+        wrapper.style.display = 'block';
+        wrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+        wrapper.style.display = 'none';
+        // Reset form
+        document.getElementById('reviewForm').reset();
+        document.getElementById('reviewRating').value = '0';
+        document.getElementById('ratingDisplay').textContent = 'Select rating';
+        document.querySelectorAll('.star-rating .star').forEach(s => s.classList.remove('active'));
+    }
+}
+
+// Submit review
+document.getElementById('reviewForm')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('reviewName').value.trim();
+    const rating = parseInt(document.getElementById('reviewRating').value);
+    const comment = document.getElementById('reviewComment').value.trim();
+
+    // Validation
+    if (!name) {
+        alert('Please enter your name.');
+        document.getElementById('reviewName').focus();
+        return;
+    }
+    if (rating === 0) {
+        alert('Please select a star rating.');
+        return;
+    }
+    if (!comment) {
+        alert('Please write your review.');
+        document.getElementById('reviewComment').focus();
+        return;
+    }
+
+    // Create review object
+    const review = {
+        name: name,
+        rating: rating,
+        comment: comment,
+        date: new Date().toISOString()
+    };
+
+    // Add to reviews
+    reviews.push(review);
+    saveReviews();
+    displayReviews();
+
+    // Reset form and hide
+    this.reset();
+    document.getElementById('reviewRating').value = '0';
+    document.getElementById('ratingDisplay').textContent = 'Select rating';
+    document.querySelectorAll('.star-rating .star').forEach(s => s.classList.remove('active'));
+    document.getElementById('reviewFormWrapper').style.display = 'none';
+
+    // Show success message
+    const btn = this.querySelector('button[type="submit"]');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '✅ Review Submitted!';
+    btn.style.background = '#2ecc71';
+    btn.style.borderColor = '#2ecc71';
+    setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.style.background = '';
+        btn.style.borderColor = '';
+    }, 3000);
+
+    // Scroll to reviews
+    document.getElementById('reviewsGrid').scrollIntoView({ behavior: 'smooth' });
+});
+
+// 8. STAR RATING SYSTEM
+const stars = document.querySelectorAll('.star-rating .star');
+const ratingDisplay = document.getElementById('ratingDisplay');
+
+stars.forEach(star => {
+    star.addEventListener('click', function() {
+        const value = parseInt(this.dataset.value);
+        document.getElementById('reviewRating').value = value;
+
+        // Update visual
+        stars.forEach(s => {
+            if (parseInt(s.dataset.value) <= value) {
+                s.classList.add('active');
+            } else {
+                s.classList.remove('active');
+            }
+        });
+
+        // Update label
+        const labels = ['', '⭐ Terrible', '⭐ Bad', '⭐⭐⭐ Okay', '⭐⭐⭐⭐ Good', '⭐⭐⭐⭐⭐ Excellent'];
+        ratingDisplay.textContent = labels[value] || 'Select rating';
+    });
+
+    star.addEventListener('mouseenter', function() {
+        const value = parseInt(this.dataset.value);
+        stars.forEach(s => {
+            if (parseInt(s.dataset.value) <= value) {
+                s.style.color = '#f1c40f';
+            } else {
+                s.style.color = '#dce3ec';
+            }
+        });
+    });
+
+    star.addEventListener('mouseleave', function() {
+        const current = parseInt(document.getElementById('reviewRating').value);
+        stars.forEach(s => {
+            if (current > 0 && parseInt(s.dataset.value) <= current) {
+                s.style.color = '#f1c40f';
+            } else {
+                s.style.color = '#dce3ec';
+            }
+        });
+    });
+});
+
+// Load reviews on page load
+document.addEventListener('DOMContentLoaded', loadReviews);
+
+// 9. BRANCH CONFIGURATION AND HANDLING
 const branches = {
     main: {
         name: 'Main Branch - Kanamkemer Catholic Street',
@@ -496,7 +714,7 @@ function submitToWhatsapp() {
     window.open(whatsappURL, "_blank");
 }
 */
-// 8. WORKING HOURS STATUS
+// 10. WORKING HOURS STATUS
 function updateWorkingHours() {
     const status = document.getElementById("working-status");
     const now = new Date();
@@ -545,7 +763,7 @@ updateWorkingHours();
 
 // Update every minute
 setInterval(updateWorkingHours, 60000);
-// 9. CONSOLE CONFIRMATION
+// 10. CONSOLE CONFIRMATION
 console.log('✅ All functionality loaded successfully!');
 console.log('✅ Navbar active state working');
 console.log('✅ Search functionality working');

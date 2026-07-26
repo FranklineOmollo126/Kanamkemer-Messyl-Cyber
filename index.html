@@ -294,8 +294,76 @@
             <div class="card"><i class="fa-solid fa-laptop"></i><h3>Online Applications</h3></div>
             <div class="card"><i class="fa-solid fa-user-graduate"></i><h3>HELB Application</h3></div>
         </div>
-        
-<section id="calculator" style="background: #f8faff; border-radius: 20px; margin-top: 20px;">
+        <!-- TESTIMONIALS WITH REVIEW FORM -->
+        <section id="testimonials">
+        <h2>What Our Customers Say</h2>
+    
+        <!-- Reviews Display -->
+         <div class="testimonial-grid" id="reviewsGrid">
+        <!-- Reviews will be inserted here by JavaScript -->
+         </div>
+
+        <!-- Leave Review Button -->
+        <div class="review-btn-container">
+        <button onclick="toggleReviewForm()" class="btn-outline">
+            <i class="fas fa-pen"></i> Leave a Review
+        </button>
+        </div>
+
+         <!-- Review Form (Hidden by default) -->
+        <div class="review-form-wrapper" id="reviewFormWrapper" style="display: none;">
+        <div class="review-form-container">
+            <h3>✍️ Share Your Experience</h3>
+            <form id="reviewForm">
+                <div class="review-input-group">
+                    <input type="text" id="reviewName" placeholder="Your Name" required>
+                </div>
+                <div class="review-input-group">
+                    <div class="star-rating" id="starRating">
+                        <span class="star" data-value="1">★</span>
+                        <span class="star" data-value="2">★</span>
+                        <span class="star" data-value="3">★</span>
+                        <span class="star" data-value="4">★</span>
+                        <span class="star" data-value="5">★</span>
+                    </div>
+                    <span id="ratingDisplay" style="margin-left: 12px; color: #5a6e85; font-size: 0.9rem;">Select rating</span>
+                    <input type="hidden" id="reviewRating" value="0">
+                </div>
+                <div class="review-input-group">
+                    <textarea id="reviewComment" rows="3" placeholder="Tell us about your experience..." required></textarea>
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <button type="submit" class="btn" style="flex: 1;">
+                        <i class="fas fa-paper-plane"></i> Submit Review
+                    </button>
+                    <button type="button" onclick="toggleReviewForm()" class="btn-outline" style="flex: 0.5;">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+         </div>
+         
+        </section>
+        <!-- STATS-->
+        <div class="stats">
+        <div><h1>5000+</h1><p>Happy Customers</p></div>
+        <div><h1>10+</h1><p>Services Offered</p></div>
+        <div><h1>10+</h1><p>Years Experience</p></div>
+         </div>
+      </section>
+      
+
+  <section>  
+         <!--  PRICING  -->
+    <section id="pricing">
+        <h2>Popular Pricing</h2>
+        <div class="pricing-grid">
+            <div class="price-card"><h3>Printing</h3><h1>Ksh 10</h1><p>Per Page</p></div>
+            <div class="price-card"><h3>Passport Photos</h3><h1>Ksh 200</h1><p>Instant Delivery</p></div>
+            <div class="price-card"><h3>Web Design</h3><h1>Custom</h1><p>Quote</p></div>
+        </div>
+        <section id="calculator" style="background: #f8faff; border-radius: 20px; margin-top: 20px;">
     <h2>💰 Price Estimator</h2>
     <p style="text-align: center; color: #5a6e85; margin-bottom: 30px;">
         Get an instant estimate for our most popular services
@@ -334,22 +402,6 @@
         </div>
     </div>
 </section>
-    </section>
-         <!-- STATS-->
-    <div class="stats">
-        <div><h1>5000+</h1><p>Happy Customers</p></div>
-        <div><h1>10+</h1><p>Services Offered</p></div>
-        <div><h1>10+</h1><p>Years Experience</p></div>
-    </div>
-
-    <!--  PRICING  -->
-    <section id="pricing">
-        <h2>Popular Pricing</h2>
-        <div class="pricing-grid">
-            <div class="price-card"><h3>Printing</h3><h1>Ksh 10</h1><p>Per Page</p></div>
-            <div class="price-card"><h3>Passport Photos</h3><h1>Ksh 200</h1><p>Instant Delivery</p></div>
-            <div class="price-card"><h3>Web Design</h3><h1>Custom</h1><p>Quote</p></div>
-        </div>
     </section>
         
         <!-- CONTACT  -->
