@@ -3,20 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Messyl Business Center</title>
+    <title>Messyl Enterprises Cyber-Lodwar </title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-        </head>
-    <body>
-         <!--NAVBAR-->
+</head>
+<body>
+
+    <!--ACCESSIBILITY TOOLBAR-->
+    <div class="accessibility-toolbar" role="toolbar" aria-label="Accessibility options">
+        <button onclick="increaseFont()" aria-label="Increase font size" title="Increase font size">
+            <i class="fas fa-plus"></i>
+        </button>
+        <button onclick="decreaseFont()" aria-label="Decrease font size" title="Decrease font size">
+            <i class="fas fa-minus"></i>
+        </button>
+        <button onclick="toggleContrast()" aria-label="Toggle high contrast" title="High contrast">
+            <i class="fas fa-circle"></i>
+        </button>
+        <button onclick="toggleTheme()" aria-label="Toggle dark mode" title="Dark mode">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <!--NAVBAR  -->
     <div class="navbar-wrapper">
         <nav class="navbar">
-            <div class="logo">                
+            <div class="logo">
                 <img src="mbc.jpeg" alt="Messyl Business Center">
                 Messyl Business Center<span>.</span>
             </div>
-            <!--SEARCH BAR-->
+
             <div class="search-container">
                 <input type="text" id="searchInput" placeholder="Search services..." aria-label="Search">
                 <button class="search-btn" id="searchBtn">
@@ -24,54 +41,67 @@
                     <span>Search</span>
                 </button>
             </div>
-            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-                <i class="fas fa-bars"></i>
-            </button>
+
+            <div style="display:flex;align-items:center;gap:8px;">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </button>
+                <select class="language-switcher" id="languageSwitcher" aria-label="Select language">
+                    <option value="en">🇬🇧 EN</option>
+                    <option value="sw">🇰🇪 SW</option>
+                </select>
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
 
             <ul class="nav-links" id="navLinks">
-                <li><a href="#home" class="nav-link active">Home </a></li>
+                <li><a href="#home" class="nav-link active">Home</a></li>
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#services" class="nav-link">Services</a></li>
-                <li><a href="#pricing"  class="nav-link">Pricing</a></li>
-                <li><a href="#contact"  class="nav-link">Contact</a></li>
+                <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                <li><a href="#pricing" class="nav-link">Pricing</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
         </nav>
     </div>
-         <!-- SEARCH RESULTS OVERLAY -->
+
+    <!--SEARCH OVERLAY-->
     <div class="search-overlay" id="searchOverlay">
         <div id="searchResults"></div>
     </div>
-        <div class="container" id="home">
 
-        <!--  HERO SECTION -->
+    <!-- HERO -->
+    <div class="container" id="home">
         <section class="hero">
             <div class="hero-text">
-                 <br>
+                <br>
                 <span class="tag"><i class="fas fa-bolt" style="margin-right:6px;"></i> Digital Hub</span>
-               
                 <h1>Your Trusted <br><span>Digital Service</span> Hub</h1>
                 <p>Fast, affordable and reliable cyber services for students, businesses and professionals.</p>
                 <a href="#services" class="btn">Explore Services</a>
+                <a href="#calculator" class="btn-outline" style="margin-left:12px;">
+                    <i class="fas fa-calculator"></i> Estimate Price
+                </a>
             </div>
 
             <div class="hero-slider" id="heroSlider">
                 <div class="slides-wrapper" id="slidesWrapper">
-                    <img class="slide" src="advert.jpeg" alt="MBC Poster">
+                    <img class="slide active" src="advert.jpeg" alt="MBC Poster">
                     <img class="slide" src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Team working in a digital hub">
                     <img class="slide" src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Business professionals collaborating">
                     <img class="slide" src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Student using digital services">
-                    
                     <img class="slide" src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Laptop and coffee shop environment">
                 </div>
                 <div class="slider-dots" id="sliderDots"></div>
             </div>
         </section>
-
     </div>
-         <!--  ABOUT -->
-       <section id="about">
+
+    <!--  ABOUT  -->
+    <section id="about">
         <div class="about-container">
-            <!-- Section Header -->
             <div class="about-header">
                 <span class="about-badge">Who We Are</span>
                 <h2>About Messyl Enterprises</h2>
@@ -79,12 +109,11 @@
                 <p class="about-subtitle">Your Trusted Partner in Institutional Supply &amp; ICT Solutions</p>
             </div>
 
-            <!-- Company Overview -->
             <div class="about-overview">
                 <div class="about-text">
                     <h3>Company Overview</h3>
                     <p><strong>Messyl Enterprises And General Supplies</strong> was established to serve as a comprehensive hub for technological solutions and academic resources. Since our inception in <strong>2013</strong>, we have evolved from a local service provider into a specialized vendor capable of meeting the rigorous procurement demands of higher education institutions.</p>
-                    <p>Our growth has been defined by a commitment to sourcing high-specification equipment and authentic academic materials that meet the evolving standards of modern learning environments. By maintaining strong relationships with global hardware manufacturers and reputable publishers, we have built a track record of delivering high-volume orders with precision and efficiency.</p>
+                    <p>Our growth has been defined by a commitment to sourcing high-specification equipment and authentic academic materials that meet the evolving standards of modern learning environments.</p>
                     <a href="#services" class="btn-about">Explore Our Services →</a>
                 </div>
                 <div class="about-stats-mini">
@@ -107,26 +136,19 @@
                 </div>
             </div>
 
-            <!-- Vision, Mission, Values -->
             <div class="about-vmv">
                 <div class="vmv-card vision">
-                    <div class="vmv-icon">
-                        <i class="fas fa-eye"></i>
-                    </div>
+                    <div class="vmv-icon"><i class="fas fa-eye"></i></div>
                     <h4>Our Vision</h4>
-                    <p>To contribute as the leading service provider that remains relevant in the market by providing unique, satisfactory services that completely satisfy and exceed the Customer's expectation in a manner that adheres to all regulations and meet the highest quality standards.</p>
+                    <p>To contribute as the leading service provider that remains relevant in the market by providing unique, satisfactory services that completely satisfy and exceed the Customer's expectation.</p>
                 </div>
                 <div class="vmv-card mission">
-                    <div class="vmv-icon">
-                        <i class="fas fa-bullseye"></i>
-                    </div>
+                    <div class="vmv-icon"><i class="fas fa-bullseye"></i></div>
                     <h4>Our Mission</h4>
-                    <p>To provide a higher level of services than is found with any other company in the industry by consistently bringing superior servicemen to ensure our services are the best in the region, maintaining the highest quality set by ethics and regulations.</p>
+                    <p>To provide a higher level of services than is found with any other company in the industry by consistently bringing superior servicemen to ensure our services are the best in the region.</p>
                 </div>
                 <div class="vmv-card values">
-                    <div class="vmv-icon">
-                        <i class="fas fa-heart"></i>
-                    </div>
+                    <div class="vmv-icon"><i class="fas fa-heart"></i></div>
                     <h4>Our Values</h4>
                     <ul>
                         <li><i class="fas fa-check-circle"></i> <strong>Integrity</strong> - Say what we mean, deliver what we promise</li>
@@ -137,7 +159,6 @@
                 </div>
             </div>
 
-            <!-- Technical Expertise & Corporate Info -->
             <div class="about-expertise">
                 <h3>Technical Expertise &amp; Corporate Information</h3>
                 <div class="expertise-grid">
@@ -172,46 +193,20 @@
                 </div>
             </div>
 
-            <!-- Company Details -->
             <div class="about-company-details">
                 <h3>Corporate Information</h3>
                 <div class="details-grid">
-                    <div class="detail-item">
-                        <span class="detail-label">Company Name</span>
-                        <span class="detail-value">Messyl Enterprises And General Supplies</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Postal Address</span>
-                        <span class="detail-value">P.O Box 65-30500, Lodwar</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Physical Location</span>
-                        <span class="detail-value">Kanamkemer Catholic Street, Lodwar</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Year Established</span>
-                        <span class="detail-value">2013</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Registration Number</span>
-                        <span class="detail-value">BN/2014/272483</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">KRA PIN</span>
-                        <span class="detail-value">P051421671X</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Email</span>
-                        <span class="detail-value">info.messylent@gmail.com</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Phone</span>
-                        <span class="detail-value">0723-259-292</span>
-                    </div>
+                    <div class="detail-item"><span class="detail-label">Company Name</span><span class="detail-value">Messyl Enterprises And General Supplies</span></div>
+                    <div class="detail-item"><span class="detail-label">Postal Address</span><span class="detail-value">P.O Box 65-30500, Lodwar</span></div>
+                    <div class="detail-item"><span class="detail-label">Physical Location</span><span class="detail-value">Kanamkemer Catholic Street, Lodwar</span></div>
+                    <div class="detail-item"><span class="detail-label">Year Established</span><span class="detail-value">2013</span></div>
+                    <div class="detail-item"><span class="detail-label">Registration Number</span><span class="detail-value">BN/2014/272483</span></div>
+                    <div class="detail-item"><span class="detail-label">KRA PIN</span><span class="detail-value">P051421671X</span></div>
+                    <div class="detail-item"><span class="detail-label">Email</span><span class="detail-value">info.messylent@gmail.com</span></div>
+                    <div class="detail-item"><span class="detail-label">Phone</span><span class="detail-value">0723-259-292</span></div>
                 </div>
             </div>
 
-            <!-- Quality Commitment -->
             <div class="about-quality">
                 <h3>Our Commitment to Quality</h3>
                 <div class="quality-grid">
@@ -219,27 +214,26 @@
                         <i class="fas fa-check-double"></i>
                         <div>
                             <h4>Quality Assurance</h4>
-                            <p>We are committed to providing high quality services that meet internationally recognized standards, specifications and practices.</p>
+                            <p>We are committed to providing high quality services that meet internationally recognized standards.</p>
                         </div>
                     </div>
                     <div class="quality-item">
                         <i class="fas fa-shield-alt"></i>
                         <div>
                             <h4>Corporate Governance</h4>
-                            <p>All actions are aligned with clearly defined ethical principles: Discipline, Transparency, Accountability, Responsibility, Fairness and Social Responsibility.</p>
+                            <p>All actions are aligned with clearly defined ethical principles: Discipline, Transparency, Accountability.</p>
                         </div>
                     </div>
                     <div class="quality-item">
                         <i class="fas fa-leaf"></i>
                         <div>
                             <h4>Environment &amp; Safety</h4>
-                            <p>We are committed to the environment, health and safety by conducting business that is safe to our employees, the public and the environment in which we operate.</p>
+                            <p>We are committed to the environment, health and safety by conducting business that is safe to all.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Company Structure -->
             <div class="about-structure">
                 <h3>Our Organizational Structure</h3>
                 <div class="structure-chart">
@@ -247,7 +241,7 @@
                         <div class="structure-node ceo">
                             <i class="fas fa-user-tie"></i>
                             <h4>Managing Director</h4>
-                            <p>Mr. Omondi Duncan Otieno </p>
+                            <p>Mr. Omondi Duncan Otieno</p>
                         </div>
                     </div>
                     <div class="structure-bottom">
@@ -270,14 +264,13 @@
                 </div>
             </div>
 
-            <!-- CTA -->
             <div class="about-cta">
                 <h3>Why Go Elsewhere?</h3>
                 <p>Partner with Messyl Enterprises for reliable, high-quality institutional supply and ICT solutions.</p>
                 <a href="#contact" class="btn-cta">Get in Touch <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
-    </section>   
+    </section>
 
     <!--  SERVICES  -->
     <section id="services">
@@ -294,241 +287,423 @@
             <div class="card"><i class="fa-solid fa-laptop"></i><h3>Online Applications</h3></div>
             <div class="card"><i class="fa-solid fa-user-graduate"></i><h3>HELB Application</h3></div>
         </div>
-        <!-- TESTIMONIALS WITH REVIEW FORM -->
-        <section id="testimonials">
-        <h2>What Our Customers Say</h2>
-    
-        <!-- Reviews Display -->
-         <div class="testimonial-grid" id="reviewsGrid">
-        <!-- Reviews will be inserted here by JavaScript -->
-         </div>
 
-        <!-- Leave Review Button -->
-        <div class="review-btn-container">
-        <button onclick="toggleReviewForm()" class="btn-outline">
-            <i class="fas fa-pen"></i> Leave a Review
-        </button>
+        <!--  PRICE CALCULATOR  -->
+        <div id="calculator" style="margin-top:50px;">
+            <h2 style="margin-bottom:30px;">💰 Price Estimator</h2>
+            <div class="calculator-container">
+                <div class="calc-group">
+                    <label>Service Type</label>
+                    <select id="calcService">
+                        <option value="printing">Printing</option>
+                        <option value="photos">Passport Photos</option>
+                        <option value="binding">Binding</option>
+                        <option value="design">Graphic Design</option>
+                    </select>
+                </div>
+                <div class="calc-group">
+                    <label>Quantity</label>
+                    <input type="number" id="calcQuantity" value="1" min="1">
+                </div>
+                <div class="calc-group" id="calcOptions">
+                    <label>Color</label>
+                    <select id="calcColor">
+                        <option value="bw">Black & White</option>
+                        <option value="color">Color</option>
+                    </select>
+                </div>
+                <button onclick="calculatePrice()" class="btn" style="width:100%;">Calculate Price</button>
+                <div id="calcResult" class="calc-result" style="display:none;">
+                    <h3>Estimated Price: <span id="priceDisplay">Ksh 0</span></h3>
+                </div>
+            </div>
         </div>
 
-         <!-- Review Form (Hidden by default) -->
-        <div class="review-form-wrapper" id="reviewFormWrapper" style="display: none;">
-        <div class="review-form-container">
-            <h3>✍️ Share Your Experience</h3>
-            <form id="reviewForm">
-                <div class="review-input-group">
-                    <input type="text" id="reviewName" placeholder="Your Name" required>
-                </div>
-                <div class="review-input-group">
-                    <div class="star-rating" id="starRating">
-                        <span class="star" data-value="1">★</span>
-                        <span class="star" data-value="2">★</span>
-                        <span class="star" data-value="3">★</span>
-                        <span class="star" data-value="4">★</span>
-                        <span class="star" data-value="5">★</span>
-                    </div>
-                    <span id="ratingDisplay" style="margin-left: 12px; color: #5a6e85; font-size: 0.9rem;">Select rating</span>
-                    <input type="hidden" id="reviewRating" value="0">
-                </div>
-                <div class="review-input-group">
-                    <textarea id="reviewComment" rows="3" placeholder="Tell us about your experience..." required></textarea>
-                </div>
-                <div style="display: flex; gap: 12px;">
-                    <button type="submit" class="btn" style="flex: 1;">
-                        <i class="fas fa-paper-plane"></i> Submit Review
-                    </button>
-                    <button type="button" onclick="toggleReviewForm()" class="btn-outline" style="flex: 0.5;">
-                        Cancel
-                    </button>
-                </div>
+        <!--  BOOKING  -->
+        <div class="booking-section">
+            <h3>📅 Book a Service</h3>
+            <form id="bookingForm">
+                <input type="date" id="bookingDate" min="2025-01-01">
+                <select id="bookingTime">
+                    <option value="09:00">9:00 AM</option>
+                    <option value="10:00">10:00 AM</option>
+                    <option value="11:00">11:00 AM</option>
+                    <option value="12:00">12:00 PM</option>
+                    <option value="14:00">2:00 PM</option>
+                    <option value="15:00">3:00 PM</option>
+                    <option value="16:00">4:00 PM</option>
+                </select>
+                <select id="bookingService">
+                    <option value="Printing">Printing</option>
+                    <option value="Passport Photos">Passport Photos</option>
+                    <option value="KRA Services">KRA Services</option>
+                    <option value="Graphic Design">Graphic Design</option>
+                    <option value="Website Development">Website Development</option>
+                </select>
+                <button type="submit" class="btn" style="width:100%;">Book Appointment</button>
             </form>
         </div>
-         </div>
-         
-        </section>
-        <!-- STATS-->
-        <div class="stats">
+    </section>
+
+    <!--  WORK GALLERY  -->
+    <section id="gallery">
+        <h2>Our Work Gallery</h2>
+        <div class="gallery-grid" id="galleryGrid">
+            
+        </div>
+    </section>
+
+    <!--  TESTIMONIALS / REVIEWS  -->
+    <section id="testimonials">
+        <h2>What Our Customers Say</h2>
+
+        <div class="testimonial-grid" id="reviewsGrid">
+        </div>
+
+        <div class="review-btn-container">
+            <button onclick="toggleReviewForm()" class="btn-outline">
+                <i class="fas fa-pen"></i> Leave a Review
+            </button>
+        </div>
+
+        <div class="review-form-wrapper" id="reviewFormWrapper" style="display: none;">
+            <div class="review-form-container">
+                <h3>✍️ Share Your Experience</h3>
+                <form id="reviewForm">
+                    <div class="review-input-group">
+                        <input type="text" id="reviewName" placeholder="Your Name" required>
+                    </div>
+                    <div class="review-input-group">
+                        <div class="star-rating" id="starRating">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                        <span id="ratingDisplay" style="margin-left: 12px; color: var(--gray-light); font-size: 0.9rem;">Select rating</span>
+                        <input type="hidden" id="reviewRating" value="0">
+                    </div>
+                    <div class="review-input-group">
+                        <textarea id="reviewComment" rows="3" placeholder="Tell us about your experience..." required></textarea>
+                    </div>
+                    <div style="display: flex; gap: 12px;">
+                        <button type="submit" class="btn" style="flex: 1;">
+                            <i class="fas fa-paper-plane"></i> Submit Review
+                        </button>
+                        <button type="button" onclick="toggleReviewForm()" class="btn-outline" style="flex: 0.5;">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Admin Controls -->
+        <div class="admin-controls" id="adminControls">
+            <button onclick="loginAsAdmin()" class="btn-outline" style="padding: 6px 16px; font-size: 0.8rem;">
+                <i class="fas fa-lock"></i> Admin Login
+            </button>
+        </div>
+
+<!-- Debug Section - Only visible to admin -->
+<div id="debugSection" style="display: none;">
+    <h4>📊 Review Database</h4>
+    <pre id="debugOutput">Loading...</pre>
+    <div class="debug-actions">
+        <button onclick="debugReviews()" class="btn" style="padding: 6px 16px; font-size: 0.8rem;">
+            <i class="fas fa-sync"></i> Refresh
+        </button>
+        <button onclick="clearAllReviews()" class="btn-outline" style="padding: 6px 16px; font-size: 0.8rem; border-color: #e74c3c; color: #e74c3c;">
+            <i class="fas fa-trash"></i> Delete All
+        </button>
+        <button onclick="resetToDefaults()" class="btn-outline" style="padding: 6px 16px; font-size: 0.8rem; border-color: #e67e22; color: #e67e22;">
+            <i class="fas fa-undo"></i> Reset Defaults
+        </button>
+        <button onclick="addSampleReviews()" class="btn-outline" style="padding: 6px 16px; font-size: 0.8rem; border-color: #2ecc71; color: #2ecc71;">
+            <i class="fas fa-plus"></i> Add Samples
+        </button>
+    </div>
+</div>
+
+<!-- Debug Toggle - Hidden by default, only shown when admin is logged in -->
+<div class="debug-toggle" id="debugToggle" style="display: none;">
+    <button onclick="toggleDebug()" class="btn-outline" style="padding: 4px 12px; font-size: 0.7rem; opacity: 0.5;">
+        🔧 Debug
+    </button>
+</div>
+    </section>
+
+    <!--  STATS  -->
+    <div class="stats">
         <div><h1>5000+</h1><p>Happy Customers</p></div>
         <div><h1>10+</h1><p>Services Offered</p></div>
         <div><h1>10+</h1><p>Years Experience</p></div>
-         </div>
-      </section>
-      
+    </div>
 
-  <section>  
-         <!--  PRICING  -->
+    <!--  PRICING  -->
     <section id="pricing">
         <h2>Popular Pricing</h2>
         <div class="pricing-grid">
-            <div class="price-card"><h3>Printing</h3><h1>Ksh 10</h1><p>Per Page</p></div>
-            <div class="price-card"><h3>Passport Photos</h3><h1>Ksh 200</h1><p>Instant Delivery</p></div>
-            <div class="price-card"><h3>Web Design</h3><h1>Custom</h1><p>Quote</p></div>
-        </div>
-        <section id="calculator" style="background: #f8faff; border-radius: 20px; margin-top: 20px;">
-    <h2>💰 Price Estimator</h2>
-    <p style="text-align: center; color: #5a6e85; margin-bottom: 30px;">
-        Get an instant estimate for our most popular services
-    </p>
-    
-    <div style="max-width: 500px; margin: 0 auto; background: white; padding: 35px; border-radius: 16px; box-shadow: 0 5px 20px rgba(0,0,0,0.06);">
-        
-        <!-- Service Type -->
-        <div style="margin-bottom: 18px;">
-            <label style="font-weight: 600; display: block; margin-bottom: 6px;">Service Type</label>
-            <select id="calcService" style="width: 100%; padding: 12px 16px; border: 2px solid #eef3f9; border-radius: 12px; font-family: inherit; font-size: 0.95rem;">
-                <option value="printing">🖨️ Printing (B&W)</option>
-                <option value="printing-color">🖨️ Printing (Color)</option>
-                <option value="photos">📸 Passport Photos</option>
-                <option value="binding">📚 Binding</option>
-                <option value="design">🎨 Graphic Design</option>
-                <option value="laminate">🔲 Lamination</option>
-            </select>
+            <div class="price-card">
+                <h3>📄 Printing</h3>
+                <h1>Ksh 10</h1>
+                <p>Per Page</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Black & White</li>
+                    <li><i class="fas fa-check"></i> A4 Size</li>
+                    <li><i class="fas fa-check"></i> High Quality</li>
+                </ul>
+                <button class="btn" onclick="quickOrder('Printing')">Order Now</button>
+            </div>
+            <div class="price-card" style="border-color:var(--primary);position:relative;">
+                <span style="position:absolute;top:-12px;right:20px;background:var(--primary);color:white;padding:4px 16px;border-radius:20px;font-size:12px;">POPULAR</span>
+                <h3>📸 Passport Photos</h3>
+                <h1>Ksh 200</h1>
+                <p>Instant Delivery</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> 6 Copies</li>
+                    <li><i class="fas fa-check"></i> White Background</li>
+                    <li><i class="fas fa-check"></i> 10 Min Delivery</li>
+                </ul>
+                <button class="btn" onclick="quickOrder('Passport Photos')">Order Now</button>
+            </div>
+            <div class="price-card">
+                <h3>💻 Web Design</h3>
+                <h1>Custom</h1>
+                <p>Quote Based</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Responsive Design</li>
+                    <li><i class="fas fa-check"></i> SEO Optimized</li>
+                    <li><i class="fas fa-check"></i> Free Hosting</li>
+                </ul>
+                <button class="btn" onclick="quickOrder('Web Design')">Request Quote</button>
+            </div>
         </div>
 
-        <!-- Quantity -->
-        <div style="margin-bottom: 18px;">
-            <label style="font-weight: 600; display: block; margin-bottom: 6px;">Quantity, Page(s)</label>
-            <input type="number" id="calcQuantity" value="1" min="1" style="width: 100%; padding: 12px 16px; border: 2px solid #eef3f9; border-radius: 12px; font-family: inherit; font-size: 0.95rem;">
+        <!--  COMPARISON TABLE  -->
+        <div style="margin-top:60px;">
+            <h2 style="margin-bottom:30px;">📊 Service Comparison</h2>
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Service</th>
+                            <th>Basic</th>
+                            <th>Standard</th>
+                            <th>Premium</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Printing</strong></td>
+                            <td>Ksh 10/page</td>
+                            <td>Ksh 8/page</td>
+                            <td>Ksh 5/page</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Passport Photos</strong></td>
+                            <td>Ksh 200</td>
+                            <td>Ksh 300</td>
+                            <td>Ksh 400</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Binding</strong></td>
+                            <td>Ksh 50</td>
+                            <td>Ksh 80</td>
+                            <td>Ksh 120</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Graphic Design</strong></td>
+                            <td>Ksh 500</td>
+                            <td>Ksh 1000</td>
+                            <td>Ksh 2000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-
-        <!-- Calculate Button -->
-        <button onclick="calculatePrice()" style="width: 100%; background: #e67e22; color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: 0.3s;">
-            Calculate Price
-        </button>
-
-        <!-- Result -->
-        <div id="calcResult" style="display: none; margin-top: 20px; padding: 20px; background: rgba(230, 126, 34, 0.08); border-radius: 12px; text-align: center; border: 2px solid #e67e22;">
-            <h3 style="color: #0b2b4a;">Estimated Price: <span id="priceDisplay" style="color: #e67e22; font-size: 2rem; font-weight: 800;">Ksh 0</span></h3>
-            <p style="color: #5a6e85; font-size: 0.9rem; margin-top: 6px;">*Prices may vary based on complexity</p>
-        </div>
-    </div>
-</section>
     </section>
-        
-        <!-- CONTACT  -->
-<section id="contact">
-    <div class="container">
+
+    <!--  CONTACT  -->
+    <section id="contact">
         <div class="section-header">
             <h2>Get in Touch</h2>
             <div class="accent"></div>
-            <p>Reach us for any service, quote, or urgent assistance — we respond within hours</p>
+            <p>Reach us for any service, quote, or urgent assistance — we respond within minutes</p>
         </div>
         <div class="contact-wrap">
-            <!--Contact Information & Form -->
             <div class="contact-left">
                 <div class="contact-info">
                     <h3><i class="fas fa-map-pin"></i> Our Location</h3>
                     <p>Messyl Business Centre, <br>Lodwar - Kanamkemer</p>
-                    <h3>Main Branch<h3>
-                         <h3><i class="fas fa-phone-alt"></i> Contact</h3>
-                    <p>
-                        <i class="fas fa-phone"></i> <a href="tel:+254 717343717">+254 717343717</a><br>
-                        <i class="fab fa-whatsapp"></i><a href="https://wa.me/254717343717?text='Hello I need your services'">+254 717343717</a> <br>
-                        <i class="fas fa-envelope"></i> info.messylent@gmail.com
-                    </p>
-                    <h3>Second Branch<h3>
+
+                    <h3>🏢 Main Branch</h3>
                     <h3><i class="fas fa-phone-alt"></i> Contact</h3>
                     <p>
-                        <i class="fas fa-phone"></i> <a href="tel:+254 742 502 651">+254 742 502 651</a><br>
-                        <i class="fab fa-whatsapp"></i><a href="https://wa.me/254742502651?text='Hello I need your services'">+254 742 502 651</a> <br>
+                        <i class="fas fa-phone"></i> <a href="tel:+254717343717">+254 717343717</a><br>
+                        <i class="fab fa-whatsapp"></i> <a href="https://wa.me/254717343717">+254 717343717</a><br>
+                        <i class="fas fa-envelope"></i> info.messylent@gmail.com
+                    </p>
+
+                    <h3>🏢 Second Branch (Messyl Orange)</h3>
+                    <h3><i class="fas fa-phone-alt"></i> Contact</h3>
+                    <p>
+                        <i class="fas fa-phone"></i> <a href="tel:+254742502651">+254 742 502 651</a><br>
+                        <i class="fab fa-whatsapp"></i> <a href="https://wa.me/254742502651">+254 742 502 651</a><br>
                         <i class="fas fa-envelope"></i> messylcyber@gmail.com
                     </p>
-                    <!--Working hours-->
-                 <h3><i class="fas fa-clock"></i> Working Hours</h3>
-<p>
-    Sunday - Friday: 8:00 AM - 7:00 PM<br>
-    Saturday: Closed
-</p>
 
-<div id="working-status" class="working-status"></div>   
-                    
-                    
+                    <h3><i class="fas fa-clock"></i> Working Hours</h3>
+                    <p>
+                        Sunday - Friday: 8:00 AM - 7:00 PM<br>
+                        Saturday: Closed
+                    </p>
+                    <div id="working-status" class="working-status"></div>
                 </div>
+
                 <div class="contact-form">
-                <form id="contactForm">
-                    <div class="input-group">
-                        <i class="fas fa-user"></i>
-                        <input id="name" type="text" placeholder="Full Name" required>
-                    </div>
-                    <div class="input-group">
-                        <i class="fas fa-envelope"></i>
-                        <input id="email" type="email" placeholder="Email Address" required>
-                    </div>
-                    <div class="input-group">
-                        <i class="fas fa-phone"></i>
-                        <input id="phone" type="tel" placeholder="Phone Number">
-                    </div>
-                    <!-- Branch selection-->
-                    <div class="input-group">
+                    <form id="contactForm">
+                        <div class="input-group">
+                            <i class="fas fa-user"></i>
+                            <input id="name" type="text" placeholder="Full Name" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input id="email" type="email" placeholder="Email Address" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-phone"></i>
+                            <input id="phone" type="tel" placeholder="Phone Number">
+                        </div>
+                        <div class="input-group">
                             <i class="fas fa-store"></i>
                             <select id="branchSelect" required>
-                                <option value="">Select which Branch to send your message</option>
+                                <option value="">Select Branch</option>
                                 <option value="main">Main Branch - Kanamkemer Catholic Street</option>
-                                <option value="second">Second Branch - (Messyl Orange)Kanam-Lodwar Town route</option>
+                                <option value="second">Second Branch - (Messyl Orange) Kanam-Lodwar Town</option>
                             </select>
                         </div>
-                    <div class="input-group">
-                        <i class="fas fa-list"></i>
-                        <select id="service">
-                            <option value="">Select Service Needed</option>
-                            <option>Printing/Copying</option>
-                            <option>Passport Photos</option>
-                            <option>KRA Services</option>
-                            <option>Graphic Design</option>
-                            <option>Website Development</option>
-                            <option>HELB / Online Application</option>
-                            <option>Other</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <i class="fas fa-comment"></i>
-                        <textarea id="message" rows="3" placeholder="Tell us about your request..."></textarea>
-                    </div>
-                    <button type="submit" class="btn-primary"  onclick="submitToWhatsapp();">
-                        <i class="fas fa-paper-plane"></i> Send Message
-                    </button>
-                </form>
+                        <div class="branch-info" id="branchInfo"></div>
+                        <div class="input-group">
+                            <i class="fas fa-list"></i>
+                            <select id="service">
+                                <option value="">Select Service Needed</option>
+                                <option>Printing/Copying</option>
+                                <option>Passport Photos</option>
+                                <option>KRA Services</option>
+                                <option>Graphic Design</option>
+                                <option>Website Development</option>
+                                <option>HELB / Online Application</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-comment"></i>
+                            <textarea id="message" rows="3" placeholder="Tell us about your request..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
                 </div>
             </div>
 
-            <!-- RIGHT: Google Map -->
             <div class="contact-right">
                 <div class="map-container">
-                    <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3641.59162928874!2d35.59858017453498!3d3.1043542968712314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x179ea10017e61789%3A0xa2c27d39506725ed!2sMessyl%20Business%20Center!5e1!3m2!1sen!2ske!4v1781862423328!5m2!1sen!2ske" 
-                        width="100%" 
-                        height="100%" 
-                        style="border:0; border-radius: 16px;" 
-                        allowfullscreen="" 
-                        loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3641.59162928874!2d35.59858017453498!3d3.1043542968712314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x179ea10017e61789%3A0xa2c27d39506725ed!2sMessyl%20Business%20Center!5e1!3m2!1sen!2ske!4v1781862423328!5m2!1sen!2ske" width="100%" height="100%" style="border:0; border-radius: 16px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                     </iframe>
                     <div class="map-overlay">
-                        <div class="map-pin">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Messyl Business Centre</span>
-                        </div>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Messyl Business Centre</span>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!--  NEWSLETTER  -->
+          <!--
+        <div class="newsletter-section">
+            <h3>📧 Get Updates & Offers</h3>
+            <p>Subscribe to receive special offers and service updates</p>
+            <form id="newsletterForm" class="newsletter-form">
+                <input type="email" id="newsletterEmail" placeholder="Your email address" required>
+                <button type="submit" class="btn">Subscribe</button>
+            </form>
+        </div>
+    -->
+    </section>
+
+    <!--  IMAGE MODAL / LIGHTBOX  -->
+    <div class="image-modal" id="imageModal">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <button class="modal-nav prev" onclick="prevImage()">&#10094;</button>
+        <button class="modal-nav next" onclick="nextImage()">&#10095;</button>
+        <img id="modalImage" src="" alt="Gallery image">
+        <div class="modal-counter" id="modalCounter">1 / 1</div>
     </div>
-</section>
-   
-         <!--FOOTER -->
+
+    <!--  FOOTER  -->
     <footer>
         <h3>Messyl Business Center</h3>
         <p>Professional Digital Solutions.</p>
         <div class="socials">
-            <i class="fab fa-facebook"></i>
-            <i class="fab fa-whatsapp"></i>
-            <i class="fab fa-instagram"></i>
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
         </div>
-        <p>&copy; 2026 All Rights Reserved</p>
+        <p>&copy; 2026 All Rights Reserved | Messyl Business Center</p>
     </footer>
-    <!-- WHATSAPP FLOAT -->
-    <a href="https://wa.me/254769230897" class="whatsapp" target="_blank" aria-label="Chat on WhatsApp">
+
+    <!--  WHATSAPP FLOAT  -->
+    <a href="https://wa.me/254717343717" class="whatsapp" id="whatsappFloat" target="_blank" aria-label="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
-    <script src ="script.js"></script>
-    </body>
+
+    <!--  QUICK ACTIONS  -->
+    <div class="quick-actions">
+        <button onclick="quickAction('print')" title="Print Now">
+            <i class="fas fa-print"></i>
+            <span class="tooltip">Print Now</span>
+        </button>
+        <button onclick="quickAction('kra')" title="KRA Help">
+            <i class="fas fa-building-columns"></i>
+            <span class="tooltip">KRA Help</span>
+        </button>
+        <button onclick="quickAction('call')" title="Call Us">
+            <i class="fas fa-phone"></i>
+            <span class="tooltip">Call Us</span>
+        </button>
+    </div>
+
+    <!--  CHAT WIDGET  -->
+    <div class="chat-widget">
+        <button class="chat-toggle" id="chatToggle" onclick="toggleChat()" aria-label="Open chat">
+            <i class="fas fa-comment-dots"></i>
+            <span class="chat-badge">1</span>
+        </button>
+        <div class="chat-popup" id="chatPopup">
+            <div class="chat-header">
+                <h4>💬 Chat with us</h4>
+                <button onclick="toggleChat()">✕</button>
+            </div>
+            <div class="chat-body">
+                <p>👋 Hi! How can we help you today?</p>
+                <div class="quick-replies">
+                    <button onclick="quickReply('Printing')">🖨️ Printing</button>
+                    <button onclick="quickReply('KRA Services')">📄 KRA</button>
+                    <button onclick="quickReply('Website Development')">💻 Website</button>
+                    <button onclick="quickReply('Passport Photos')">📸 Photos</button>
+                </div>
+            </div>
+            <div class="chat-footer">
+                <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="if(event.key==='Enter')sendChatMessage()">
+                <button onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
 </html>

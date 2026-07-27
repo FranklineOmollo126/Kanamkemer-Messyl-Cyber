@@ -1,19 +1,102 @@
-// 1. NAVBAR ACTIVE STATE
-// Get all sections and nav links
+// 1. LANGUAGE DATA 
+const translations = {
+    en: {
+        title: 'Messyl Business Center',
+        heroTitle: 'Your Trusted Digital Service Hub',
+        heroDesc: 'Fast, affordable and reliable cyber services for students, businesses and professionals.',
+        exploreBtn: 'Explore Services',
+        aboutTitle: 'About Messyl Enterprises',
+        servicesTitle: 'Our Services',
+        pricingTitle: 'Popular Pricing',
+        contactTitle: 'Get in Touch'
+    },
+    sw: {
+        title: 'Kituo cha Biashara Messyl',
+        heroTitle: 'Kituo chako cha Huduma za Dijiti',
+        heroDesc: 'Huduma za haraka, nafuu na za kuaminika kwa wanafunzi, wafanyabiashara na wataalamu.',
+        exploreBtn: 'Tazama Huduma',
+        aboutTitle: 'Kuhusu Messyl Enterprises',
+        servicesTitle: 'Huduma Zetu',
+        pricingTitle: 'Bei Maarufu',
+        contactTitle: 'Wasiliana Nasi'
+    }
+};
+
+let currentLang = 'en';
+
+function changeLanguage(lang) {
+    currentLang = lang;
+    const t = translations[lang];
+    if (!t) return;
+
+    document.querySelector('.hero-text h1').innerHTML = t.heroTitle.replace('Digital Service', '<span>Digital Service</span>');
+    document.querySelector('.hero-text p').textContent = t.heroDesc;
+    document.querySelector('.hero-text .btn').textContent = t.exploreBtn;
+    document.querySelector('#about .about-header h2').textContent = t.aboutTitle;
+    document.querySelector('#services h2').textContent = t.servicesTitle;
+    document.querySelector('#pricing h2').textContent = t.pricingTitle;
+    document.querySelector('#contact .section-header h2').textContent = t.contactTitle;
+    document.querySelector('.logo').innerHTML = `<img src="mbc.jpeg" alt="Messyl Business Center"> ${t.title}<span>.</span>`;
+}
+
+document.getElementById('languageSwitcher').addEventListener('change', function() {
+    changeLanguage(this.value);
+});
+
+// 2. THEME TOGGLE 
+function toggleTheme() {
+    document.body.classList.toggle('dark-mode');
+    const icon = document.getElementById('themeIcon');
+    if (document.body.classList.contains('dark-mode')) {
+        icon.className = 'fas fa-sun';
+        localStorage.setItem('theme', 'dark');
+    } else {
+        icon.className = 'fas fa-moon';
+        localStorage.setItem('theme', 'light');
+    }
+}
+
+document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+// Load saved theme
+if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark-mode');
+    document.getElementById('themeIcon').className = 'fas fa-sun';
+}
+
+// 3. ACCESSIBILITY 
+let fontSize = 16;
+
+function increaseFont() {
+    fontSize += 2;
+    document.body.style.fontSize = fontSize + 'px';
+}
+
+function decreaseFont() {
+    if (fontSize > 12) {
+        fontSize -= 2;
+        document.body.style.fontSize = fontSize + 'px';
+    }
+}
+
+function toggleContrast() {
+    document.body.classList.toggle('high-contrast');
+}
+
+// 4. NAVBAR ACTIVE 
 const sections = document.querySelectorAll('section[id], .container[id]');
 const navLinks = document.querySelectorAll('.nav-link');
-// Function to update active link based on scroll position
+
 function updateActiveLink() {
     let current = '';
-    const scrollPosition = window.scrollY + 120;    
+    const scrollPosition = window.scrollY + 120;
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
         const sectionHeight = section.offsetHeight;
-        
         if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
             current = section.getAttribute('id');
         }
-    });    
+    });
     navLinks.forEach(link => {
         link.classList.remove('active');
         if (link.getAttribute('href') === '#' + current) {
@@ -21,47 +104,32 @@ function updateActiveLink() {
         }
     });
 }
-// Update active link on scroll
+
 window.addEventListener('scroll', updateActiveLink);
-// Update active link on load - set Home as default
-window.addEventListener('load', function() {
-    const homeLink = document.querySelector('.nav-link[href="#home"]');
-    if (homeLink) {
-        homeLink.classList.add('active');
-    }
-    updateActiveLink();
-});
-// 2. SMOOTH SCROLL WITH ACTIVE STATE
+
+// 5. SMOOTH SCROLL 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         const href = this.getAttribute('href');
-        if (href === "#") return;        
-        // Remove active class from all nav links
+        if (href === "#") return;
         navLinks.forEach(link => link.classList.remove('active'));
-        // Add active class to clicked link
         this.classList.add('active');
-        
         e.preventDefault();
         const target = document.querySelector(href);
         if (target) {
             const navbarHeight = document.querySelector('.navbar-wrapper').offsetHeight;
             const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
-            
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
+            window.scrollTo({ top: targetPosition, behavior: 'smooth' });
         }
     });
 });
 
-// 3. SEARCH FUNCTIONALITY
+// 6. SEARCH 
 const searchInput = document.getElementById('searchInput');
 const searchBtn = document.getElementById('searchBtn');
 const searchOverlay = document.getElementById('searchOverlay');
 const searchResults = document.getElementById('searchResults');
 
-// Service data for search
 const services = [
     { name: 'Printing', icon: 'fa-print', section: '#services' },
     { name: 'Photocopying', icon: 'fa-copy', section: '#services' },
@@ -72,31 +140,26 @@ const services = [
     { name: 'Scanning & Emailing', icon: 'fa-envelope', section: '#services' },
     { name: 'Website Development', icon: 'fa-code', section: '#services' },
     { name: 'Online Applications', icon: 'fa-laptop', section: '#services' },
-    { name: 'HELB Application', icon: 'fa-user-graduate', section: '#services' }
-];
-
-// Additional searchable content
-const pages = [
+    { name: 'HELB Application', icon: 'fa-user-graduate', section: '#services' },
     { name: 'Home', icon: 'fa-home', section: '#home' },
     { name: 'About Us', icon: 'fa-info-circle', section: '#about' },
     { name: 'Pricing', icon: 'fa-tag', section: '#pricing' },
-    { name: 'Contact Us', icon: 'fa-envelope', section: '#contact' }
+    { name: 'Contact Us', icon: 'fa-envelope', section: '#contact' },
+    { name: 'Gallery', icon: 'fa-images', section: '#gallery' },
+    { name: 'Testimonials', icon: 'fa-star', section: '#testimonials' }
 ];
-const allSearchable = [...services, ...pages];
+
 function performSearch(query) {
-    if (!query.trim()) {
-        searchOverlay.classList.remove('active');
-        return;
-    }
-    const results = allSearchable.filter(item =>
+    if (!query.trim()) { searchOverlay.classList.remove('active'); return; }
+    const results = services.filter(item =>
         item.name.toLowerCase().includes(query.toLowerCase())
     );
     if (results.length === 0) {
         searchResults.innerHTML = `
             <div class="no-results">
-                <i class="fas fa-search" style="font-size: 40px; display: block; margin-bottom: 15px; color: #dce3ec;"></i>
-                <h3 style="color: #0b2b4a; margin-bottom: 8px;">No results found</h3>
-                <p style="color: #8a9bb0;">Try searching for "Printing", "KRA", or "Website"</p>
+                <i class="fas fa-search" style="font-size:40px;display:block;margin-bottom:15px;color:#dce3ec;"></i>
+                <h3 style="color:var(--dark);margin-bottom:8px;">No results found</h3>
+                <p style="color:var(--gray-light);">Try searching for "Printing", "KRA", or "Website"</p>
             </div>
         `;
         searchOverlay.classList.add('active');
@@ -114,11 +177,9 @@ function performSearch(query) {
             </div>
         `;
     });
-
     searchResults.innerHTML = resultsHTML;
     searchOverlay.classList.add('active');
 
-    // Add click listeners to results
     document.querySelectorAll('.result-item').forEach(item => {
         item.addEventListener('click', function() {
             const section = this.dataset.section;
@@ -126,13 +187,7 @@ function performSearch(query) {
             if (target) {
                 const navbarHeight = document.querySelector('.navbar-wrapper').offsetHeight;
                 const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-                
-                // Close search overlay
+                window.scrollTo({ top: targetPosition, behavior: 'smooth' });
                 searchOverlay.classList.remove('active');
                 searchInput.value = '';
             }
@@ -140,49 +195,42 @@ function performSearch(query) {
     });
 }
 
-// Search event listeners
-searchBtn.addEventListener('click', function(e) {
-    e.preventDefault();
-    performSearch(searchInput.value);
-});
+searchBtn.addEventListener('click', function(e) { e.preventDefault();
+    performSearch(searchInput.value); });
+searchInput.addEventListener('keyup', function(e) { if (e.key === 'Enter') performSearch(this.value); });
 
-searchInput.addEventListener('keyup', function(e) {
-    if (e.key === 'Enter') {
-        performSearch(this.value);
-    }
-});
-// Close search overlay when clicking outside
 document.addEventListener('click', function(e) {
     if (searchOverlay.classList.contains('active')) {
-        if (!searchOverlay.contains(e.target) && 
-            !searchInput.contains(e.target) && 
-            !searchBtn.contains(e.target)) {
+        if (!searchOverlay.contains(e.target) && !searchInput.contains(e.target) && !searchBtn.contains(e.target)) {
             searchOverlay.classList.remove('active');
         }
     }
 });
-// Close on Escape key
+
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && searchOverlay.classList.contains('active')) {
         searchOverlay.classList.remove('active');
         searchInput.value = '';
     }
 });
-// 4. HERO SLIDER
+
+// 7. HERO SLIDER 
 (function() {
     const slides = document.querySelectorAll('.slide');
     const dotsContainer = document.getElementById('sliderDots');
     let currentIndex = 0;
     let intervalId = null;
     const intervalTime = 3000;
-    // Create dots
+
     slides.forEach((_, idx) => {
         const dot = document.createElement('span');
         dot.dataset.index = idx;
         if (idx === 0) dot.classList.add('active-dot');
         dotsContainer.appendChild(dot);
     });
+
     const dots = dotsContainer.querySelectorAll('span');
+
     function goToSlide(index) {
         if (index < 0) index = slides.length - 1;
         if (index >= slides.length) index = 0;
@@ -192,20 +240,17 @@ document.addEventListener('keydown', function(e) {
         dots[index].classList.add('active-dot');
         currentIndex = index;
     }
-    function nextSlide() {
-        goToSlide(currentIndex + 1);
-    }
+
+    function nextSlide() { goToSlide(currentIndex + 1); }
+
     function startSlider() {
         if (intervalId) clearInterval(intervalId);
         intervalId = setInterval(nextSlide, intervalTime);
     }
-    function stopSlider() {
-        if (intervalId) {
-            clearInterval(intervalId);
-            intervalId = null;
-        }
-    }
-    // Dot clicks
+
+    function stopSlider() { if (intervalId) { clearInterval(intervalId);
+            intervalId = null; } }
+
     dots.forEach((dot) => {
         dot.addEventListener('click', function() {
             const idx = parseInt(this.dataset.index, 10);
@@ -214,92 +259,382 @@ document.addEventListener('keydown', function(e) {
             startSlider();
         });
     });
-    // Pause on hover/touch
+
     const sliderContainer = document.getElementById('heroSlider');
     sliderContainer.addEventListener('mouseenter', stopSlider);
     sliderContainer.addEventListener('mouseleave', startSlider);
-    sliderContainer.addEventListener('touchstart', stopSlider, { passive: true });
-    sliderContainer.addEventListener('touchend', startSlider, { passive: true });
 
-    // Init
     goToSlide(0);
     startSlider();
-
-    console.log('✅ Image slider running – switches every 3 seconds.');
 })();
 
-// 5. HAMBURGER MENU
+// 8. HAMBURGER 
 const hamburger = document.getElementById('hamburger');
 const navLinksMenu = document.getElementById('navLinks');
 
 hamburger.addEventListener('click', () => {
     navLinksMenu.classList.toggle('active');
 });
-// Close menu on link click (mobile)
+
 document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
         navLinksMenu.classList.remove('active');
     });
 });
-// 6.CALCULATOR
+
+// 9. BRANCH CONFIGURATION 
+const branches = {
+    main: {
+        name: 'Main Branch - Kanamkemer Catholic Street',
+        phone: '+254 717343717',
+        whatsapp: '254717343717',
+        email: 'info.messylent@gmail.com',
+        address: 'Kanamkemer Catholic Street'
+    },
+    second: {
+        name: 'Second Branch - (Messyl Orange) Kanam-Lodwar Town route',
+        phone: '+254 742 502 651',
+        whatsapp: '254742502651',
+        email: 'messylcyber@gmail.com',
+        address: 'Kanam-Lodwar Town route'
+    }
+};
+
+// 10. BRANCH SELECTION 
+const branchSelect = document.getElementById('branchSelect');
+const branchInfo = document.getElementById('branchInfo');
+
+if (branchSelect) {
+    branchSelect.addEventListener('change', function() {
+        const selected = this.value;
+        if (selected && branches[selected]) {
+            const branch = branches[selected];
+            branchInfo.className = `branch-info visible ${selected}`;
+            branchInfo.innerHTML = `
+                <i class="fas fa-store"></i>
+                <strong>${branch.name}</strong><br>
+                <i class="fas fa-phone"></i> ${branch.phone} 
+                <i class="fab fa-whatsapp" style="margin-left:12px;"></i> ${branch.whatsapp}
+            `;
+            document.getElementById('whatsappFloat').href = `https://wa.me/${branch.whatsapp}`;
+        } else {
+            branchInfo.className = 'branch-info';
+            branchInfo.innerHTML = '';
+        }
+    });
+}
+
+// 11. CONTACT FORM (WhatsApp) 
+function submitToWhatsapp() {
+    const name = document.getElementById('name')?.value.trim() || '';
+    const email = document.getElementById('email')?.value.trim() || '';
+    const phone = document.getElementById('phone')?.value.trim() || '';
+    const branch = document.getElementById('branchSelect')?.value || '';
+    const service = document.getElementById('service')?.value || '';
+    const message = document.getElementById('message')?.value.trim() || '';
+
+    if (!branch) {
+        alert('❌ Please select a branch before sending.');
+        document.getElementById('branchSelect')?.focus();
+        return false;
+    }
+
+    const branchDetails = branches[branch];
+    if (!branchDetails) { alert('❌ Invalid branch selected.'); return false; }
+
+    const phoneNumber = branchDetails.whatsapp;
+
+    let text = '*📋 NEW SERVICE INQUIRY*\n';
+    text += '━'.repeat(30) + '\n\n';
+    text += `*🏢 Branch:* ${branchDetails.name}\n`;
+    text += `*📞 Branch Phone:* ${branchDetails.phone}\n`;
+    text += `*📍 Branch Location:* ${branchDetails.address}\n\n`;
+    text += '━'.repeat(30) + '\n\n';
+    text += `*👤 Name:* ${name || 'Not provided'}\n`;
+    text += `*📧 Email:* ${email || 'Not provided'}\n`;
+    text += `*📱 Phone:* ${phone || 'Not provided'}\n`;
+    text += `*🛠️ Service Needed:* ${service || 'Not specified'}\n\n`;
+    text += '━'.repeat(30) + '\n\n';
+    text += `*📝 Message:*\n${message || 'No message provided'}\n\n`;
+    text += '━'.repeat(30) + '\n\n';
+    text += `*📅 Sent:* ${new Date().toLocaleString()}\n`;
+
+    const encodedText = encodeURIComponent(text);
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedText}`;
+    window.open(whatsappURL, '_blank');
+
+    alert(`✅ Your inquiry has been sent to:\n\n${branchDetails.name}\n📞 ${branchDetails.phone}\n\nPlease wait for a response.`);
+    return true;
+}
+
+document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    submitToWhatsapp();
+});
+
+// 12. PRICE CALCULATOR 
 function calculatePrice() {
     const service = document.getElementById('calcService').value;
     const quantity = parseInt(document.getElementById('calcQuantity').value) || 1;
+    const color = document.getElementById('calcColor')?.value || 'bw';
 
-    // Prices per unit
-    const prices = {
-        'printing': 10,
-        'printing-color': 20,
-        'photos': 200,
-        'binding': 100,
-        'design': 500,
-        'laminate':50
-    };
+    let unitPrice = 0;
+    switch (service) {
+        case 'printing':
+            unitPrice = color === 'color' ? 20 : 10;
+            break;
+        case 'photos':
+            unitPrice = 200;
+            break;
+        case 'binding':
+            unitPrice = 50;
+            break;
+        case 'design':
+            unitPrice = 500;
+            break;
+        default:
+            unitPrice = 0;
+    }
 
-    const unitPrice = prices[service] || 0;
     const total = unitPrice * quantity;
-
     const result = document.getElementById('calcResult');
     result.style.display = 'block';
     document.getElementById('priceDisplay').textContent = `Ksh ${total.toLocaleString()}`;
-
-    // Animation
-    result.style.animation = 'none';
-    setTimeout(() => {
-        result.style.animation = 'fadeIn 0.5s ease';
-    }, 10);
 }
 
-// Animation
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
+// 13. BOOKING 
+document.getElementById('bookingForm')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const date = document.getElementById('bookingDate').value;
+    const time = document.getElementById('bookingTime').value;
+    const service = document.getElementById('bookingService').value;
+    if (!date) { alert('Please select a date.'); return; }
+    const message =
+        `📅 *Appointment Booking*\n\n📆 Date: ${date}\n⏰ Time: ${time}\n🛠️ Service: ${service}\n\nPlease confirm my appointment.`;
+    window.open(`https://wa.me/254717343717?text=${encodeURIComponent(message)}`, '_blank');
+});
+/*
+// 14. NEWSLETTER 
+document.getElementById('newsletterForm')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('newsletterEmail').value;
+    if (email) {
+        alert('✅ Subscribed successfully!');
+        const message = `📧 *New Subscriber*\nEmail: ${email}`;
+        window.open(`https://wa.me/254717343717?text=${encodeURIComponent(message)}`, '_blank');
+        this.reset();
     }
-`;
-document.head.appendChild(style);
-//7.REVIEW SYSTEM
+});
+*/
+// 15. WORKING HOURS 
+function updateWorkingHours() {
+    const status = document.getElementById("working-status");
+    const now = new Date();
+    const day = now.getDay();
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
+    const openTime = 8 * 60;
+    const closeTime = 19 * 60;
+
+    if (day === 6) {
+        status.className = "working-status closed";
+        status.innerHTML = "🔴 Closed Today (Saturday)";
+        return;
+    }
+    if (currentMinutes < openTime) {
+        const minsLeft = openTime - currentMinutes;
+        if (minsLeft <= 60) {
+            status.className = "working-status soon";
+            status.innerHTML = `🟡 Opening in ${minsLeft} minute${minsLeft !== 1 ? "s" : ""}`;
+        } else {
+            status.className = "working-status closed";
+            status.innerHTML = "🔴 Currently Closed";
+        }
+        return;
+    }
+    if (currentMinutes >= openTime && currentMinutes < closeTime) {
+        const minsLeft = closeTime - currentMinutes;
+        if (minsLeft <= 60) {
+            status.className = "working-status soon";
+            status.innerHTML = `🟠 Closing in ${minsLeft} minute${minsLeft !== 1 ? "s" : ""}`;
+        } else {
+            status.className = "working-status open";
+            status.innerHTML = "🟢 We are Open";
+        }
+        return;
+    }
+    status.className = "working-status closed";
+    status.innerHTML = "🔴 Closed for Today";
+}
+
+updateWorkingHours();
+setInterval(updateWorkingHours, 60000);
+
+// 16. QUICK ACTIONS 
+function quickAction(type) {
+    const messages = {
+        print: "🖨️ I'd like to place a printing order. Please assist.",
+        kra: "📄 I need help with KRA services. Can you assist?",
+        call: "📞 Please call me back regarding your services."
+    };
+    const msg = messages[type] || "I need your services. Please assist.";
+    window.open(`https://wa.me/254717343717?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function quickOrder(service) {
+    const msg = `🛒 I'd like to order *${service}*. Please provide more details.`;
+    window.open(`https://wa.me/254717343717?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// 17. CHAT WIDGET 
+function toggleChat() {
+    const popup = document.getElementById('chatPopup');
+    popup.classList.toggle('active');
+}
+
+function quickReply(service) {
+    const msg =
+        `Hi! I'm interested in *${service}* services. Can you tell me more about pricing and availability?`;
+    window.open(`https://wa.me/254717343717?text=${encodeURIComponent(msg)}`, '_blank');
+    document.getElementById('chatPopup').classList.remove('active');
+}
+
+function sendChatMessage() {
+    const input = document.getElementById('chatInput');
+    const msg = input.value.trim();
+    if (!msg) return;
+    window.open(`https://wa.me/254717343717?text=${encodeURIComponent(msg)}`, '_blank');
+    input.value = '';
+    document.getElementById('chatPopup').classList.remove('active');
+}
+
+// 18 WORK GALLERY WITH LIGHTBOX  
+
+const galleryImages = [{
+    url: 'https://images.unsplash.com/photo-1563206767-5b18f218e8de?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    title: 'Printing Services',
+    desc: 'High-quality printing for all your needs'
+}, {
+    url: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    title: 'Graphic Design',
+    desc: 'Professional graphic design services'
+}, {
+    url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    title: 'Web Development',
+    desc: 'Modern responsive websites'
+}, {
+    url: 'https://images.unsplash.com/photo-1432889821006-c6b2c4b16bca?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    title: 'Branding & Logos',
+    desc: 'Professional branding solutions'
+}, {
+    url: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    title: 'Photocopying',
+    desc: 'Fast and reliable photocopying'
+}, {
+    url: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    title: 'Digital Solutions',
+    desc: 'Complete digital service solutions'
+}];
+
+let currentImageIndex = 0;
+
+function renderGallery() {
+    const grid = document.getElementById('galleryGrid');
+    if (!grid) return;
+
+    grid.innerHTML = galleryImages.map((img, index) => `
+        <div class="gallery-item" onclick="openImage(${index})">
+            <img src="${img.url}" alt="${img.title}" loading="lazy">
+            <div class="gallery-icon">
+                <i class="fas fa-search-plus"></i>
+            </div>
+            <div class="gallery-overlay">
+                <h3>${img.title}</h3>
+                <p>${img.desc}</p>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Image Modal / Lightbox
+function openImage(index) {
+    currentImageIndex = index;
+    const modal = document.getElementById('imageModal');
+    const img = document.getElementById('modalImage');
+    const counter = document.getElementById('modalCounter');
+
+    modal.classList.add('active');
+    img.src = galleryImages[index].url;
+    img.alt = galleryImages[index].title;
+    counter.textContent = `${index + 1} / ${galleryImages.length}`;
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    const modal = document.getElementById('imageModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function prevImage() {
+    currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+    const img = document.getElementById('modalImage');
+    const counter = document.getElementById('modalCounter');
+    img.src = galleryImages[currentImageIndex].url;
+    img.alt = galleryImages[currentImageIndex].title;
+    counter.textContent = `${currentImageIndex + 1} / ${galleryImages.length}`;
+}
+
+function nextImage() {
+    currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+    const img = document.getElementById('modalImage');
+    const counter = document.getElementById('modalCounter');
+    img.src = galleryImages[currentImageIndex].url;
+    img.alt = galleryImages[currentImageIndex].title;
+    counter.textContent = `${currentImageIndex + 1} / ${galleryImages.length}`;
+}
+
+// Close modal on click outside
+document.getElementById('imageModal')?.addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeModal();
+    }
+});
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+    }
+    if (e.key === 'ArrowLeft') {
+        prevImage();
+    }
+    if (e.key === 'ArrowRight') {
+        nextImage();
+    }
+});
+
+// 19. ON-PAGE REVIEW SYSTEM 
+
 let reviews = [];
+let isAdmin = false;
 
-// Default reviews
-const defaultReviews = [
-    {
-        name: 'John Mwangi',
-        rating: 5,
-        comment: 'Excellent service! They helped me with my KRA registration quickly and professionally. Highly recommended!',
-        date: new Date('2026-04-15').toISOString()
-    },
-    {
-        name: 'Sarah Akinyi',
-        rating: 5,
-        comment: 'The best cyber cafe in Lodwar! Fast internet, friendly staff, and affordable prices. They also do great graphic design work.',
-        date: new Date('2026-04-10').toISOString()
-    }
-  
-];
+const defaultReviews = [{
+    name: 'John Mwangi',
+    rating: 5,
+    comment: 'Excellent service! They helped me with my KRA registration quickly and professionally. Highly recommended!',
+    date: new Date('2025-01-15').toISOString()
+}, {
+    name: 'Sarah Akinyi',
+    rating: 5,
+    comment: 'The best cyber cafe in Lodwar! Fast internet, friendly staff, and affordable prices. They also do great graphic design work.',
+    date: new Date('2025-01-10').toISOString()
+}, {
+    name: 'Kevin Ochieng',
+    rating: 4,
+    comment: 'They built our company website and did an amazing job. Professional, fast, and within budget. Will use them again.',
+    date: new Date('2025-01-05').toISOString()
+}];
 
-// Load reviews from localStorage
 function loadReviews() {
     const stored = localStorage.getItem('messylReviews');
     if (stored) {
@@ -309,22 +644,23 @@ function loadReviews() {
             reviews = [];
         }
     }
-    
-    // If no reviews, use defaults
     if (reviews.length === 0) {
         reviews = [...defaultReviews];
         saveReviews();
     }
-    
     displayReviews();
 }
 
-// Save reviews to localStorage
 function saveReviews() {
     localStorage.setItem('messylReviews', JSON.stringify(reviews));
 }
 
-// Display reviews
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
 function displayReviews() {
     const grid = document.getElementById('reviewsGrid');
     if (!grid) return;
@@ -339,11 +675,10 @@ function displayReviews() {
         return;
     }
 
-    // Sort: newest first
     const sorted = [...reviews].reverse();
-
     let html = '';
-    sorted.forEach((review) => {
+    sorted.forEach((review, index) => {
+        const realIndex = reviews.length - 1 - index;
         const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
         const date = new Date(review.date).toLocaleDateString('en-KE', {
             year: 'numeric',
@@ -351,13 +686,22 @@ function displayReviews() {
             day: 'numeric'
         });
 
+        const deleteBtn = isAdmin ? `
+            <button onclick="deleteReview(${realIndex})" class="review-delete" title="Delete this review">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        ` : '';
+
         html += `
             <div class="testimonial-card">
                 <div class="stars">${stars}</div>
                 <p>"${escapeHtml(review.comment)}"</p>
                 <div class="customer">
-                    <strong>${escapeHtml(review.name)}</strong>
-                    <span>${date}</span>
+                    <div>
+                        <strong>${escapeHtml(review.name)}</strong>
+                        <span>${date}</span>
+                    </div>
+                    ${deleteBtn}
                 </div>
             </div>
         `;
@@ -366,14 +710,8 @@ function displayReviews() {
     grid.innerHTML = html;
 }
 
-// Simple escape to prevent XSS
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
+// 20. REVIEW FORM 
 
-// Toggle review form
 function toggleReviewForm() {
     const wrapper = document.getElementById('reviewFormWrapper');
     if (wrapper.style.display === 'none') {
@@ -381,7 +719,6 @@ function toggleReviewForm() {
         wrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
     } else {
         wrapper.style.display = 'none';
-        // Reset form
         document.getElementById('reviewForm').reset();
         document.getElementById('reviewRating').value = '0';
         document.getElementById('ratingDisplay').textContent = 'Select rating';
@@ -389,7 +726,6 @@ function toggleReviewForm() {
     }
 }
 
-// Submit review
 document.getElementById('reviewForm')?.addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -397,23 +733,12 @@ document.getElementById('reviewForm')?.addEventListener('submit', function(e) {
     const rating = parseInt(document.getElementById('reviewRating').value);
     const comment = document.getElementById('reviewComment').value.trim();
 
-    // Validation
-    if (!name) {
-        alert('Please enter your name.');
-        document.getElementById('reviewName').focus();
-        return;
-    }
-    if (rating === 0) {
-        alert('Please select a star rating.');
-        return;
-    }
-    if (!comment) {
-        alert('Please write your review.');
-        document.getElementById('reviewComment').focus();
-        return;
-    }
+    if (!name) { alert('Please enter your name.');
+        document.getElementById('reviewName').focus(); return; }
+    if (rating === 0) { alert('Please select a star rating.'); return; }
+    if (!comment) { alert('Please write your review.');
+        document.getElementById('reviewComment').focus(); return; }
 
-    // Create review object
     const review = {
         name: name,
         rating: rating,
@@ -421,19 +746,16 @@ document.getElementById('reviewForm')?.addEventListener('submit', function(e) {
         date: new Date().toISOString()
     };
 
-    // Add to reviews
     reviews.push(review);
     saveReviews();
     displayReviews();
 
-    // Reset form and hide
     this.reset();
     document.getElementById('reviewRating').value = '0';
     document.getElementById('ratingDisplay').textContent = 'Select rating';
     document.querySelectorAll('.star-rating .star').forEach(s => s.classList.remove('active'));
     document.getElementById('reviewFormWrapper').style.display = 'none';
 
-    // Show success message
     const btn = this.querySelector('button[type="submit"]');
     const originalText = btn.innerHTML;
     btn.innerHTML = '✅ Review Submitted!';
@@ -445,11 +767,11 @@ document.getElementById('reviewForm')?.addEventListener('submit', function(e) {
         btn.style.borderColor = '';
     }, 3000);
 
-    // Scroll to reviews
     document.getElementById('reviewsGrid').scrollIntoView({ behavior: 'smooth' });
 });
 
-// 8. STAR RATING SYSTEM
+//  21.STAR RATING 
+
 const stars = document.querySelectorAll('.star-rating .star');
 const ratingDisplay = document.getElementById('ratingDisplay');
 
@@ -457,17 +779,9 @@ stars.forEach(star => {
     star.addEventListener('click', function() {
         const value = parseInt(this.dataset.value);
         document.getElementById('reviewRating').value = value;
-
-        // Update visual
         stars.forEach(s => {
-            if (parseInt(s.dataset.value) <= value) {
-                s.classList.add('active');
-            } else {
-                s.classList.remove('active');
-            }
+            s.classList.toggle('active', parseInt(s.dataset.value) <= value);
         });
-
-        // Update label
         const labels = ['', '⭐ Terrible', '⭐ Bad', '⭐⭐⭐ Okay', '⭐⭐⭐⭐ Good', '⭐⭐⭐⭐⭐ Excellent'];
         ratingDisplay.textContent = labels[value] || 'Select rating';
     });
@@ -475,297 +789,161 @@ stars.forEach(star => {
     star.addEventListener('mouseenter', function() {
         const value = parseInt(this.dataset.value);
         stars.forEach(s => {
-            if (parseInt(s.dataset.value) <= value) {
-                s.style.color = '#f1c40f';
-            } else {
-                s.style.color = '#dce3ec';
-            }
+            s.style.color = parseInt(s.dataset.value) <= value ? '#f1c40f' : '#dce3ec';
         });
     });
 
     star.addEventListener('mouseleave', function() {
         const current = parseInt(document.getElementById('reviewRating').value);
         stars.forEach(s => {
-            if (current > 0 && parseInt(s.dataset.value) <= current) {
-                s.style.color = '#f1c40f';
-            } else {
-                s.style.color = '#dce3ec';
-            }
+            s.style.color = current > 0 && parseInt(s.dataset.value) <= current ? '#f1c40f' :
+                '#dce3ec';
         });
     });
 });
 
-// Load reviews on page load
-document.addEventListener('DOMContentLoaded', loadReviews);
+// 22. ADMIN FUNCTIONS 
 
-// 9. BRANCH CONFIGURATION AND HANDLING
-const branches = {
-    main: {
-        name: 'Main Branch - Kanamkemer Catholic Street',
-        phone: '+254 717343717',
-        whatsapp: '254717343717',
-        email: 'messylcyber@gmail.com',
-        address: 'Kanamkemer Catholic Street'
-    },
-    second: {
-        name: 'Second Branch - (Messyl Orange) Kanam-Lodwar Town route',
-        phone: '+254 742 502 651',
-        whatsapp: '254742502651',
-        email: 'messylcyber@gmail.com',
-        address: 'Kanam-Lodwar Town route'        
-    }
-};
-// Function to submit form data to WhatsApp
-function submitToWhatsapp() {
-    // Get form values with proper IDs
-    const name = document.getElementById('name')?.value.trim() || '';
-    const email = document.getElementById('email')?.value.trim() || '';
-    const phone = document.getElementById('phone')?.value.trim() || '';
-    const branch = document.getElementById('branchSelect')?.value || '';
-    const service = document.getElementById('service')?.value || '';
-    const message = document.getElementById('message')?.value.trim() || '';
-    const fileInput = document.getElementById('fileAttachment');
-    const file = fileInput?.files[0] || null;
-    // Validate branch selection
-    if (!branch) {
-        alert('❌ Please select a branch before sending.');
-        document.getElementById('branchSelect')?.focus();
-        return false;
-    }    
-    // Get branch details
-    const branchDetails = branches[branch];
-    if (!branchDetails) {
-        alert('❌ Invalid branch selected.');
-        return false;
-    }    
-    // Get the phone number for the selected branch
-    const phoneNumber = branchDetails.whatsapp;    
-    // Build the message
-    let text = '*📋 NEW SERVICE INQUIRY*\n';
-    text += '━'.repeat(30) + '\n\n';
-    text += `*🏢 Branch:* ${branchDetails.name}\n`;
-    text += `*📞 Branch Phone:* ${branchDetails.phone}\n`;
-    text += `*📍 Branch Location:* ${branchDetails.address}\n\n`;
-    text += '━'.repeat(30) + '\n\n';
-    text += `*👤 Name:* ${name || 'Not provided'}\n`;
-    text += `*📧 Email:* ${email || 'Not provided'}\n`;
-    text += `*📱 Phone:* ${phone || 'Not provided'}\n`;
-    text += `*🛠️ Service Needed:* ${service || 'Not specified'}\n\n`;
-    text += '━'.repeat(30) + '\n\n';
-    text += `*📝 Message:*\n${message || 'No message provided'}\n\n`;
-    text += '━'.repeat(30) + '\n\n';    
-    // Add file information if attached
-    if (file) {
-        const fileSizeKB = (file.size / 1024).toFixed(1);
-        const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
-        const fileSizeDisplay = fileSizeMB > 1 ? `${fileSizeMB} MB` : `${fileSizeKB} KB`;
+function loginAsAdmin() {
+    const password = prompt('Enter admin password:');
+    if (password === 'admin123') {
+        isAdmin = true;
+        displayReviews();
         
-        text += `*📎 File Attached:*\n`;
-        text += `   📄 ${file.name}\n`;
-        text += `   📊 Size: ${fileSizeDisplay}\n`;
-        text += `   📁 Type: ${file.type || 'Unknown'}\n\n`;
-        text += `⚠️ *IMPORTANT:* Please attach the file manually when sending this message.\n`;
-        text += `   The file will not be sent automatically via WhatsApp.\n\n`;
-    } else {
-        text += `*📎 No file attached*\n\n`;
-    }    
-    text += '━'.repeat(30) + '\n\n';
-    text += `*📅 Sent:* ${new Date().toLocaleString()}\n`;
-    text += `*✅ Please respond to this inquiry as soon as possible.*`;    
-    // Encode the message for URL
-    const encodedText = encodeURIComponent(text);    
-    // Create WhatsApp URL with the branch-specific number
-    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedText}`;
-    
-    // Open WhatsApp in a new tab
-    window.open(whatsappURL, '_blank');    
-    alert(`✅ Your inquiry has been sent to:\n\n${branchDetails.name}\n📞 ${branchDetails.phone}\n\nPlease wait for a response.`);    
-    return true;
-}
-
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        submitToWhatsapp();
-    });
-}
-// FILE ATTACHMENT HANDLING
-const fileInput = document.getElementById('fileAttachment');
-const fileInfo = document.getElementById('fileInfo');
-
-if (fileInput) {
-    fileInput.addEventListener('change', function() {
-        const fileName = this.files[0]?.name;
-        const fileSize = this.files[0]?.size;
-        const maxSize = 10 * 1024 * 1024;
-        
-        if (this.files.length > 0) {
-            if (fileSize > maxSize) {
-                alert('File is too large! Maximum size is 10MB.');
-                this.value = '';
-                fileInfo.innerHTML = `
-                    <i class="fas fa-exclamation-circle" style="color: #d32f2f;"></i>
-                    File too large! Maximum size is 10MB.
-                `;
-                fileInfo.style.color = '#d32f2f';
-                return;
-            }
-            
-            fileInfo.innerHTML = `
-                <div class="file-selected">
-                    <i class="fas fa-file"></i>
-                    <span>${fileName}</span>
-                    <span style="font-size: 0.75rem; color: #5a6e85;">
-                        (${(fileSize / 1024).toFixed(1)} KB)
-                    </span>
-                    <span class="remove-file" onclick="removeFile()">
-                        <i class="fas fa-times"></i>
-                    </span>
-                </div>
-            `;
-            fileInfo.style.color = '#2e7d32';
-        } else {
-            fileInfo.innerHTML = `
-                <i class="fas fa-info-circle" style="color: #e67e22;"></i> 
-                Supported formats: PDF, DOC, DOCX, JPG, PNG, TXT (Max 10MB)
-            `;
-            fileInfo.style.color = '#5a6e85';
+        // Show debug toggle button
+        const debugToggle = document.getElementById('debugToggle');
+        if (debugToggle) {
+            debugToggle.style.display = 'block';
         }
-    });
-}
-
-function removeFile() {
-    const fileInput = document.getElementById('fileAttachment');
-    if (fileInput) {
-        fileInput.value = '';
-        const fileInfo = document.getElementById('fileInfo');
-        fileInfo.innerHTML = `
-            <i class="fas fa-info-circle" style="color: #e67e22;"></i> 
-            Supported formats: PDF, DOC, DOCX, JPG, PNG, TXT (Max 10MB)
+        
+        // Update admin controls
+        document.getElementById('adminControls').innerHTML = `
+            <span style="color: #2ecc71; font-weight: 600;">🔐 Admin Mode Active</span>
+            <button onclick="logoutAdmin()" class="btn-outline" style="padding: 6px 16px; font-size: 0.8rem;">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
         `;
-        fileInfo.style.color = '#5a6e85';
+        alert('✅ Admin mode activated! You can now delete reviews and access debug tools.');
+    } else if (password !== null) {
+        alert('❌ Incorrect password!');
     }
 }
-// UPDATE WHATSAPP FLOAT BUTTON
-function updateWhatsAppButton(branchKey) {
-    const whatsappLink = document.getElementById('whatsappFloat');
-    if (whatsappLink && branches[branchKey]) {
-        const phone = branches[branchKey].whatsapp.replace(/[^0-9]/g, '');
-        whatsappLink.href = `https://wa.me/${phone}`;
-        whatsappLink.setAttribute('aria-label', `Chat on WhatsApp - ${branches[branchKey].name}`);
+
+function logoutAdmin() {
+    isAdmin = false;
+    displayReviews();
+    
+    // Hide debug toggle button
+    const debugToggle = document.getElementById('debugToggle');
+    if (debugToggle) {
+        debugToggle.style.display = 'none';
     }
+    
+    // Hide debug section if open
+    const debugSection = document.getElementById('debugSection');
+    if (debugSection) {
+        debugSection.style.display = 'none';
+    }
+    
+    // Reset admin controls
+    document.getElementById('adminControls').innerHTML = `
+        <button onclick="loginAsAdmin()" class="btn-outline" style="padding: 6px 16px; font-size: 0.8rem;">
+            <i class="fas fa-lock"></i> Admin Login
+        </button>
+    `;
+    alert('👋 Logged out of admin mode.');
 }
-// BRANCH SELECTION HANDLER
-const branchSelect = document.getElementById('branchSelect');
-if (branchSelect) {
-    branchSelect.addEventListener('change', function() {
-        const selectedBranch = this.value;
-        
-        // Remove existing branch info
-        const existingInfo = document.querySelector('.branch-info');
-        if (existingInfo) {
-            existingInfo.remove();
-        }
-        
-        if (selectedBranch && branches[selectedBranch]) {
-            const branch = branches[selectedBranch];
-            const infoDiv = document.createElement('div');
-            infoDiv.className = `branch-info visible ${selectedBranch}`;
-            infoDiv.innerHTML = `
-                <i class="fas fa-store"></i>
-                <strong>${branch.name}</strong><br>
-                <i class="fas fa-phone"></i> ${branch.phone} 
-                <i class="fab fa-whatsapp" style="margin-left:12px;"></i> ${branch.whatsapp}
-            `;            
-            // Insert after the select
-            this.parentNode.after(infoDiv);
-            
-            // Update WhatsApp button
-            updateWhatsAppButton(selectedBranch);
-        }
-    });
-}
-
-/*
-function submitToWhatsapp() {
-    const phoneNumber = "254768255174";
-
-    const name = document.getElementById("name")?.value.trim() || "";
-    const email = document.getElementById("email")?.value.trim() || "";
-    const phone = document.getElementById("phone")?.value.trim() || "";
-    const service = document.getElementById("service")?.value.trim() || "";
-    const message = document.getElementById("message")?.value.trim() || "";
-
-    const text = `*New Service Inquiry*
-
-    *Name:* ${name}
-    *Email:* ${email}
-    *Phone:* ${phone}
-    *Service:* ${service}
-
-    *Message:*
-    ${message}
-
-     If you have any document or image, please attach it before sending this message.`;
-
-    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
-
-    window.open(whatsappURL, "_blank");
-}
-*/
-// 10. WORKING HOURS STATUS
-function updateWorkingHours() {
-    const status = document.getElementById("working-status");
-    const now = new Date();
-    const day = now.getDay(); // Sunday = 0 ... Saturday = 6
-    const currentMinutes = now.getHours() * 60 + now.getMinutes();
-    const openTime = 8 * 60;   // 8:00 AM
-    const closeTime = 19 * 60; // 7:00 PM
-    // Saturday
-    if (day === 6) {
-        status.className = "working-status closed";
-        status.innerHTML = "🔴 Closed Today (Saturday)";
+function deleteReview(index) {
+    if (!isAdmin) {
+        alert('⚠️ Please login as admin first!');
         return;
     }
-    // Before opening
-    if (currentMinutes < openTime) {
-        const minsLeft = openTime - currentMinutes;
-
-        if (minsLeft <= 60) {
-            status.className = "working-status soon";
-            status.innerHTML = `🟡 Opening in ${minsLeft} minute${minsLeft !== 1 ? "s" : ""}`;
-        } else {
-            status.className = "working-status closed";
-            status.innerHTML = "🔴 Currently Closed";
-        }
-        return;
+    const review = reviews[index];
+    if (confirm(`Are you sure you want to delete ${review.name}'s review?`)) {
+        reviews.splice(index, 1);
+        saveReviews();
+        displayReviews();
+        alert('✅ Review deleted successfully!');
     }
-
-    // During working hours
-    if (currentMinutes >= openTime && currentMinutes < closeTime) {
-        const minsLeft = closeTime - currentMinutes;
-
-        if (minsLeft <= 60) {
-            status.className = "working-status soon";
-            status.innerHTML = `🟠 Closing in ${minsLeft} minute${minsLeft !== 1 ? "s" : ""}`;
-        } else {
-            status.className = "working-status open";
-            status.innerHTML = "🟢 We are Open";
-        }
-        return;
-    }
-    // After closing
-    status.className = "working-status closed";
-    status.innerHTML = "🔴 Closed for Today";
 }
-updateWorkingHours();
 
-// Update every minute
-setInterval(updateWorkingHours, 60000);
-// 10. CONSOLE CONFIRMATION
-console.log('✅ All functionality loaded successfully!');
-console.log('✅ Navbar active state working');
-console.log('✅ Search functionality working');
-console.log('✅ Hero slider working');
-console.log('✅ Hamburger menu working');
+// 23. DEBUG FUNCTIONS 
+
+function toggleDebug() {
+    const section = document.getElementById('debugSection');
+    if (section.style.display === 'none') {
+        section.style.display = 'block';
+        debugReviews();
+    } else {
+        section.style.display = 'none';
+    }
+}
+
+function debugReviews() {
+    const output = document.getElementById('debugOutput');
+    const data = localStorage.getItem('messylReviews');
+    if (data) {
+        try {
+            const parsed = JSON.parse(data);
+            output.textContent = parsed.length === 0 ?
+                '📭 No reviews found.' :
+                JSON.stringify(parsed, null, 2);
+        } catch {
+            output.textContent = '❌ Error reading data.';
+        }
+    } else {
+        output.textContent = '📭 No reviews found in localStorage.';
+    }
+}
+
+function clearAllReviews() {
+    if (confirm('⚠️ Delete ALL reviews? This cannot be undone!')) {
+        localStorage.removeItem('messylReviews');
+        reviews = [];
+        saveReviews();
+        displayReviews();
+        debugReviews();
+        alert('✅ All reviews deleted!');
+    }
+}
+
+function resetToDefaults() {
+    if (confirm('⚠️ Reset to default reviews? This will delete all current reviews!')) {
+        localStorage.removeItem('messylReviews');
+        reviews = [...defaultReviews];
+        saveReviews();
+        displayReviews();
+        debugReviews();
+        alert('✅ Reset to default reviews!');
+    }
+}
+
+function addSampleReviews() {
+    const newSamples = [{
+        name: 'Sample User 1',
+        rating: 5,
+        comment: 'Great service! Very professional and fast.',
+        date: new Date().toISOString()
+    }, {
+        name: 'Sample User 2',
+        rating: 4,
+        comment: 'Good experience overall. Would recommend.',
+        date: new Date().toISOString()
+    }];
+    reviews = [...reviews, ...newSamples];
+    saveReviews();
+    displayReviews();
+    debugReviews();
+    alert('✅ Sample reviews added!');
+}
+
+// 24. INITIALIZE 
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadReviews();
+    renderGallery();
+    console.log('✅ Messyl Business Center loaded successfully!');
+    console.log('✅ Features: Dark Mode, On-Page Reviews, Gallery Lightbox');
+    console.log('💡 Click gallery images to open lightbox');
+    console.log('💡 Reviews are saved in localStorage');
+});
