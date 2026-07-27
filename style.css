@@ -625,6 +625,54 @@ body.dark-mode .language-switcher {
     color: white;
     transform: translateY(-2px);
 }
+/*  BUTTON FIX FOR MOBILE  */
+.hero-text .btn-group {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.hero-text .btn,
+.hero-text .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+/*  RESPONSIVE FIXES  */
+
+@media (max-width: 768px) {
+    .hero-text .btn-group {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .hero-text .btn,
+    .hero-text .btn-outline {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 20px;
+        font-size: 1rem;
+        text-align: center;
+        white-space: normal;
+    }
+    
+    .hero-text .btn-outline {
+        margin-left: 0 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-text .btn,
+    .hero-text .btn-outline {
+        padding: 12px 16px;
+        font-size: 0.95rem;
+        width: 100%;
+    }
+}
 
 /*  HERO SLIDER  */
 .hero-slider {
