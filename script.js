@@ -383,11 +383,14 @@ function calculatePrice() {
         case 'printing':
             unitPrice = color === 'color' ? 20 : 10;
             break;
+        case 'lamination':
+            unitPrice = 50; 
+            break;
         case 'photos':
             unitPrice = 200;
             break;
         case 'binding':
-            unitPrice = 50;
+            unitPrice = 100;
             break;
         case 'design':
             unitPrice = 500;
