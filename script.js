@@ -271,16 +271,86 @@ document.addEventListener('keydown', function(e) {
 // 8. HAMBURGER 
 const hamburger = document.getElementById('hamburger');
 const navLinksMenu = document.getElementById('navLinks');
+let isUserOpening = false;
 
-hamburger.addEventListener('click', () => {
-    navLinksMenu.classList.toggle('active');
-});
+// Function to close menu 
+function closeMenu() {
+    if (!navLinksMenu) return;
+    
+    navLinksMenu.classList.remove('active');
+    
+    const icon = hamburger?.querySelector('i');
+    if (icon) {
+        icon.className = 'fas fa-bars';
+    }
+    isUserOpening = false;
+}
 
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        navLinksMenu.classList.remove('active');
+// Function to open menu 
+function openMenu() {
+    if (!navLinksMenu) return;
+    
+    navLinksMenu.classList.add('active');
+    
+    const icon = hamburger?.querySelector('i');
+    if (icon) {
+        icon.className = 'fas fa-times';
+    }    
+    isUserOpening = true;
+    
+    setTimeout(() => {
+        isUserOpening = false;
+    }, 500);
+}
+
+// Toggle menu on hamburger click
+if (hamburger && navLinksMenu) {
+    hamburger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        
+        if (navLinksMenu.classList.contains('active')) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
     });
-});
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (navLinksMenu.classList.contains('active')) {
+            const isClickInsideMenu = navLinksMenu.contains(e.target);
+            const isClickOnHamburger = hamburger.contains(e.target);
+            
+            if (!isClickInsideMenu && !isClickOnHamburger) {
+                closeMenu();
+            }
+        }
+    });
+
+    //  SCROLL TO CLOSE MENU 
+    window.addEventListener('scroll', function() {
+        if (navLinksMenu.classList.contains('active') && !isUserOpening) {
+            closeMenu();
+        }
+    });
+
+    // Close menu when window is resized to desktop
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768 && navLinksMenu.classList.contains('active')) {
+            closeMenu();
+        }
+    });
+
+    // Close menu when a nav link is clicked (mobile)
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', function() {
+            if (window.innerWidth <= 768) {
+                closeMenu();
+            }
+        });
+    });
+}
+console.log('✅ Hamburger menu loaded - scroll while open + scroll to close!');
 
 // 9. BRANCH CONFIGURATION 
 const branches = {
@@ -299,6 +369,7 @@ const branches = {
         address: 'Kanam-Lodwar Town route'
     }
 };
+
 
 // 10. BRANCH SELECTION 
 const branchSelect = document.getElementById('branchSelect');
@@ -950,3 +1021,4 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('💡 Click gallery images to open lightbox');
     console.log('💡 Reviews are saved in localStorage');
 });
+
