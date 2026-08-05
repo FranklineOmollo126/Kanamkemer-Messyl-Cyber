@@ -131,6 +131,7 @@ const searchOverlay = document.getElementById('searchOverlay');
 const searchResults = document.getElementById('searchResults');
 
 const services = [
+    { name: 'Messyl', section: '#about-messyl'},
     { name: 'Printing', icon: 'fa-print', section: '#services' },
     { name: 'Lamination', icon: 'fa-layer-group', section: '#services'},
     { name: 'Photocopying', icon: 'fa-copy', section: '#services' },
@@ -148,6 +149,7 @@ const services = [
     { name: 'Mission', icon: 'fas fa-bullseye', section: '#mission'},
     { name: 'Values', icon: 'fas fa-heart', section: '#values'},
     { name: 'Pricing', icon: 'fa-tag', section: '#pricing' },
+    { name: 'Book Now',icon: 'fas fa-calendar-alt', section: '#booking'},
     { name: 'Contact Us', icon: 'fa-envelope', section: '#contact' },
     { name: 'Gallery', icon: 'fa-images', section: '#gallery' },
     { name: 'Testimonials', icon: 'fa-star', section: '#testimonials' }
