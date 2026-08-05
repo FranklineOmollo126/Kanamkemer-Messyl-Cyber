@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://franklineomollo126.github.io/Kanamkemer-Messyl-Cyber/sitemap.xml
