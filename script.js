@@ -132,6 +132,7 @@ const searchResults = document.getElementById('searchResults');
 
 const services = [
     { name: 'Printing', icon: 'fa-print', section: '#services' },
+    { name: 'Lamination', icon: 'fa-layer-group', section: '#services'},
     { name: 'Photocopying', icon: 'fa-copy', section: '#services' },
     { name: 'Binding', icon: 'fa-book', section: '#services' },
     { name: 'Passport Photos', icon: 'fa-camera', section: '#services' },
@@ -143,6 +144,9 @@ const services = [
     { name: 'HELB Application', icon: 'fa-user-graduate', section: '#services' },
     { name: 'Home', icon: 'fa-home', section: '#home' },
     { name: 'About Us', icon: 'fa-info-circle', section: '#about' },
+    { name: 'Vision', icon: 'fas fa-eye', section: '#vision'},
+    { name: 'Mission', icon: 'fas fa-bullseye', section: '#mission'},
+    { name: 'Values', icon: 'fas fa-heart', section: '#values'},
     { name: 'Pricing', icon: 'fa-tag', section: '#pricing' },
     { name: 'Contact Us', icon: 'fa-envelope', section: '#contact' },
     { name: 'Gallery', icon: 'fa-images', section: '#gallery' },
@@ -172,7 +176,7 @@ function performSearch(query) {
                 <i class="fas ${item.icon}"></i>
                 <div>
                     <div class="result-title">${item.name}</div>
-                    <div class="result-desc">Click to navigate to ${item.name}</div>
+                    <div class="result-desc">Click me to navigate to ${item.name}😊</div>
                 </div>
             </div>
         `;
