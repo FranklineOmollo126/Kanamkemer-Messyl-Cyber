@@ -599,9 +599,25 @@ function sendChatMessage() {
 // 18 WORK GALLERY WITH LIGHTBOX  
 
 const galleryImages = [{
-    url: 'https://images.unsplash.com/photo-1563206767-5b18f218e8de?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    url: 'images/gallery/printing/print2.jpg',
     title: 'Printing Services',
     desc: 'High-quality printing for all your needs'
+}, {
+    url: 'images/gallery/branding and logos/shirt1.jpg',
+    title: 'Branding & Logos',
+    desc: 'Professional branding solutions'
+}, {
+    url: 'images/gallery/branding and logos/shirt2.jpg',
+    title: 'Branding & Logos',
+    desc: 'Professional branding solutions'
+}, {
+    url: 'images/gallery/branding and logos/brand.jpg',
+    title: 'Branding machine',
+    desc: 'Professional branding solutions'
+}, {
+    url: 'images/gallery/branding and logos/brand2.jpg',
+    title: 'Branding machine',
+    desc: 'Professional branding solutions'
 }, {
     url: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     title: 'Graphic Design',
@@ -611,17 +627,13 @@ const galleryImages = [{
     title: 'Web Development',
     desc: 'Modern responsive websites'
 }, {
-    url: 'images/gallery/branding.avif',
-    title: 'Branding & Logos',
-    desc: 'Professional branding solutions'
-}, {
-    url: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    url: 'images/gallery/printing/print1.jpg',
     title: 'Photocopying',
     desc: 'Fast and reliable photocopying'
 }, {
-    url: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    title: 'Digital Solutions',
-    desc: 'Complete digital service solutions'
+    url: 'images/gallery/products/product1.jpg',
+    title: 'Products',
+    desc: 'High Quality Products'
 }];
 
 let currentImageIndex = 0;
