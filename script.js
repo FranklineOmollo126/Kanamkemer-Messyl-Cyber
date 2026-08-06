@@ -480,7 +480,16 @@ function calculatePrice() {
     const result = document.getElementById('calcResult');
     result.style.display = 'block';
     document.getElementById('priceDisplay').textContent = `Ksh ${total.toLocaleString()}`;
+    if (service && quantity > 0) {
+        alert('⚠️ This is an estimate. Prices may slightly vary depending on final requirements and materials used.');
+    } else {
+        alert('⚠️ Please select a service and enter a valid quantity.');
+    }
+    
+    return total;
+
 }
+
 
 // 13. BOOKING 
 document.getElementById('bookingForm')?.addEventListener('submit', function(e) {
