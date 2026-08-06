@@ -2683,26 +2683,6 @@ footer p {
     font-size: 0.95rem;
 }
 
-.socials {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin: 25px 0 20px;
-}
-
-.socials a {
-    color: white;
-    font-size: 28px;
-    transition: var(--transition);
-    opacity: 0.8;
-    text-decoration: none;
-}
-
-.socials a:hover {
-    opacity: 1;
-    transform: translateY(-3px);
-    color: var(--primary);
-}
 
 /*  RESPONSIVE  */
 @media (max-width: 992px) {

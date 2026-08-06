@@ -1027,4 +1027,3 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('💡 Click gallery images to open lightbox');
     console.log('💡 Reviews are saved in localStorage');
 });
-
