@@ -602,7 +602,7 @@ const galleryImages = [{
     title: 'Web Development',
     desc: 'Modern responsive websites'
 }, {
-    url: 'https://images.unsplash.com/photo-1432889821006-c6b2c4b16bca?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    url: 'images/gallery/branding.avif',
     title: 'Branding & Logos',
     desc: 'Professional branding solutions'
 }, {
