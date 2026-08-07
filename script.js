@@ -635,7 +635,6 @@ const galleryImages = [{
     title: 'Products',
     desc: 'High Quality Products'
 }];
-
 let currentImageIndex = 0;
 
 function renderGallery() {
