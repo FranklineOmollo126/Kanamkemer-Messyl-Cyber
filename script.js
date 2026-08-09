@@ -2,7 +2,7 @@
 const translations = {
     en: {
         title: 'Messyl Business Center',
-        heroTitle: 'Your Trusted Digital Service Hub',
+        heroTitle: 'Messyl Business Center: Your Trusted Digital Service Hub in Lodwar',
         heroDesc: 'Fast, affordable and reliable cyber services for students, businesses and professionals.',
         exploreBtn: 'Explore Services',
         aboutTitle: 'About Messyl Enterprises',
@@ -11,8 +11,8 @@ const translations = {
         contactTitle: 'Get in Touch'
     },
     sw: {
-        title: 'Kituo cha Biashara Messyl',
-        heroTitle: 'Kituo chako cha Huduma za Dijiti',
+        title: 'Messyl Business Center',
+        heroTitle: 'Messyl Business Center: Kituo chako cha Huduma za Dijiti Lodwar',
         heroDesc: 'Huduma za haraka, nafuu na za kuaminika kwa wanafunzi, wafanyabiashara na wataalamu.',
         exploreBtn: 'Tazama Huduma',
         aboutTitle: 'Kuhusu Messyl Enterprises',
@@ -29,14 +29,14 @@ function changeLanguage(lang) {
     const t = translations[lang];
     if (!t) return;
 
-    document.querySelector('.hero-text h1').innerHTML = t.heroTitle.replace('Digital Service', '<span>Digital Service</span>');
+    document.querySelector('.hero-text h1').innerHTML = t.heroTitle.replace('Your Trusted Digital Service', '<span>Your Trusted Digital Service</span>');
     document.querySelector('.hero-text p').textContent = t.heroDesc;
     document.querySelector('.hero-text .btn').textContent = t.exploreBtn;
     document.querySelector('#about .about-header h2').textContent = t.aboutTitle;
     document.querySelector('#services h2').textContent = t.servicesTitle;
     document.querySelector('#pricing h2').textContent = t.pricingTitle;
     document.querySelector('#contact .section-header h2').textContent = t.contactTitle;
-    document.querySelector('.logo').innerHTML = `<img src="mbc.jpeg" alt="Messyl Business Center"> ${t.title}<span>.</span>`;
+    document.querySelector('.logo').innerHTML = `<img src="images/logo/mbc.jpeg" alt="Messyl Business Center"> ${t.title}<span>.</span>`;
 }
 
 document.getElementById('languageSwitcher').addEventListener('change', function() {
