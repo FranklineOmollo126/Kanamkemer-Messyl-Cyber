@@ -551,6 +551,7 @@ body.dark-mode .language-switcher {
     padding: 20px 0 10px;
     gap: 30px;
     animation: fadeInUp 0.9s ease;
+    
 }
 
 .hero-text {

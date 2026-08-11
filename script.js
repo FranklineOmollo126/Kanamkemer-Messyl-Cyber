@@ -124,7 +124,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// 6. SEARCH 
+// 6. SEARCH
+
 const searchInput = document.getElementById('searchInput');
 const searchBtn = document.getElementById('searchBtn');
 const searchOverlay = document.getElementById('searchOverlay');
@@ -154,6 +155,17 @@ const services = [
     { name: 'Gallery', icon: 'fa-images', section: '#gallery' },
     { name: 'Testimonials', icon: 'fa-star', section: '#testimonials' }
 ];
+
+function navigateToSearchResult(sectionId) {
+    const target = document.querySelector(sectionId);
+    if (target) {
+        const navbarHeight = document.querySelector('.navbar-wrapper')?.offsetHeight || 90;
+        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+        searchOverlay.classList.remove('active');
+        searchInput.value = '';
+    }
+}
 
 function performSearch(query) {
     if (!query.trim()) { searchOverlay.classList.remove('active'); return; }
@@ -185,18 +197,24 @@ function performSearch(query) {
     });
     searchResults.innerHTML = resultsHTML;
     searchOverlay.classList.add('active');
-
     document.querySelectorAll('.result-item').forEach(item => {
-        item.addEventListener('click', function() {
+        // Desktop: click event
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
             const section = this.dataset.section;
-            const target = document.querySelector(section);
-            if (target) {
-                const navbarHeight = document.querySelector('.navbar-wrapper').offsetHeight;
-                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
-                window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-                searchOverlay.classList.remove('active');
-                searchInput.value = '';
-            }
+            if (section) navigateToSearchResult(section);
+        });
+        
+        // Mobile: touchstart 
+        item.addEventListener('touchstart', function(e) {        
+            this._section = this.dataset.section;
+        }, { passive: true });
+        
+        // Mobile: touchend 
+        item.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            const section = this.dataset.section || this._section;
+            if (section) navigateToSearchResult(section);
         });
     });
 }
@@ -219,6 +237,8 @@ document.addEventListener('keydown', function(e) {
         searchInput.value = '';
     }
 });
+
+console.log('✅ Search with mobile touch support loaded!');
 
 // 7. HERO SLIDER 
 (function() {
