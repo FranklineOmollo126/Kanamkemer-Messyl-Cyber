@@ -125,7 +125,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // 6. SEARCH
-
 const searchInput = document.getElementById('searchInput');
 const searchBtn = document.getElementById('searchBtn');
 const searchOverlay = document.getElementById('searchOverlay');
@@ -164,14 +163,22 @@ function navigateToSearchResult(sectionId) {
         window.scrollTo({ top: targetPosition, behavior: 'smooth' });
         searchOverlay.classList.remove('active');
         searchInput.value = '';
+        searchInput.blur();
     }
 }
 
 function performSearch(query) {
-    if (!query.trim()) { searchOverlay.classList.remove('active'); return; }
+    if (!query.trim()) { 
+        searchOverlay.classList.remove('active'); 
+        return; 
+    }
+    
+    searchInput.blur();
+    
     const results = services.filter(item =>
         item.name.toLowerCase().includes(query.toLowerCase())
     );
+    
     if (results.length === 0) {
         searchResults.innerHTML = `
             <div class="no-results">
@@ -183,6 +190,7 @@ function performSearch(query) {
         searchOverlay.classList.add('active');
         return;
     }
+    
     let resultsHTML = '';
     results.forEach(item => {
         resultsHTML += `
@@ -197,48 +205,77 @@ function performSearch(query) {
     });
     searchResults.innerHTML = resultsHTML;
     searchOverlay.classList.add('active');
+
     document.querySelectorAll('.result-item').forEach(item => {
-        // Desktop: click event
         item.addEventListener('click', function(e) {
             e.preventDefault();
             const section = this.dataset.section;
-            if (section) navigateToSearchResult(section);
+            if (section) {
+                searchInput.blur();
+                navigateToSearchResult(section);
+            }
         });
         
-        // Mobile: touchstart 
-        item.addEventListener('touchstart', function(e) {        
+        let touchMoved = false;
+        
+        item.addEventListener('touchstart', function(e) {
+            touchMoved = false;
             this._section = this.dataset.section;
         }, { passive: true });
         
-        // Mobile: touchend 
+        item.addEventListener('touchmove', function(e) {
+            touchMoved = true;
+        }, { passive: true });
+        
         item.addEventListener('touchend', function(e) {
-            e.preventDefault();
-            const section = this.dataset.section || this._section;
-            if (section) navigateToSearchResult(section);
+            if (!touchMoved) {
+                e.preventDefault();
+                e.stopPropagation();
+                const section = this.dataset.section || this._section;
+                if (section) {
+                    searchInput.blur();
+                    navigateToSearchResult(section);
+                }
+            }
         });
     });
 }
 
-searchBtn.addEventListener('click', function(e) { e.preventDefault();
-    performSearch(searchInput.value); });
-searchInput.addEventListener('keyup', function(e) { if (e.key === 'Enter') performSearch(this.value); });
+searchBtn.addEventListener('click', function(e) { 
+    e.preventDefault();
+    searchInput.blur();
+    performSearch(searchInput.value); 
+});
+
+searchInput.addEventListener('keydown', function(e) { 
+    if (e.key === 'Enter') {
+        e.preventDefault(); 
+        this.blur();
+        performSearch(this.value);
+    }
+});
 
 document.addEventListener('click', function(e) {
     if (searchOverlay.classList.contains('active')) {
-        if (!searchOverlay.contains(e.target) && !searchInput.contains(e.target) && !searchBtn.contains(e.target)) {
+        if (!searchOverlay.contains(e.target) && 
+            !searchInput.contains(e.target) && 
+            !searchBtn.contains(e.target)) {
             searchOverlay.classList.remove('active');
+            searchInput.blur();
         }
     }
 });
 
+// Close on Escape key
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && searchOverlay.classList.contains('active')) {
         searchOverlay.classList.remove('active');
         searchInput.value = '';
+        searchInput.blur();
     }
 });
 
-console.log('✅ Search with mobile touch support loaded!');
+console.log('✅ Search with Enter key (desktop & mobile) fixed!');
 
 // 7. HERO SLIDER 
 (function() {
